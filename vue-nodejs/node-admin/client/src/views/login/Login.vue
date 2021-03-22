@@ -2,7 +2,7 @@
     <div class="login">
         <section class="form_container">
             <div class="manage_tip">
-                <span class="title">客户后台管理系统</span>
+                <span class="title">奔驰4S店管理系统</span>
                 <el-form :model="loginUser" :rules="rules" ref="loginForm" label-width="60px" class="loginForm">
                      <el-form-item label="邮箱" prop="email">
                         <el-input v-model="loginUser.email" placeholder="请输入email"></el-input>
@@ -81,7 +81,7 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  background: url(../../assets/img/back.jpg) no-repeat center center;
+  background: url(../../assets/img/backGround.jpg) no-repeat center center;
   background-size: 100% 100%;
     .form_container {
       width: 400px;

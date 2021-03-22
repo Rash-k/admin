@@ -2,16 +2,18 @@ import Mock from 'mockjs'
 let List = [];
 export default {
     getStatisticalData: () => {
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 9; i++) {
             List.push(
                 Mock.mock({
-                    奔驰: Mock.Random.float(1000000, 10000000, 0, 2),
-                    宝马: Mock.Random.float(1000000, 10000000, 0, 2),
-                    奥迪: Mock.Random.float(1000000, 10000000, 0, 2),
-                    本田: Mock.Random.float(1000000, 10000000, 0, 2),
-                    丰田: Mock.Random.float(1000000, 10000000, 0, 2),
-                    凯迪拉克: Mock.Random.float(1000000, 10000000, 0, 2),
-                    红旗: Mock.Random.float(1000000, 10000000, 0, 2)
+                    奔驰A级: Mock.Random.float(1000000, 10000000, 0, 2),
+                    奔驰C级: Mock.Random.float(1000000, 10000000, 0, 2),
+                    奔驰E级: Mock.Random.float(1000000, 10000000, 0, 2),
+                    奔驰S级: Mock.Random.float(1000000, 10000000, 0, 2),
+                    奔驰GLA: Mock.Random.float(1000000, 10000000, 0, 2),
+                    奔驰GLB: Mock.Random.float(1000000, 10000000, 0, 2),
+                    奔驰GLC: Mock.Random.float(1000000, 10000000, 0, 2),
+                    奔驰CLE: Mock.Random.float(1000000, 10000000, 0, 2),
+                    奔驰CLS: Mock.Random.float(1000000, 10000000, 0, 2)
                 })
             )
         }
@@ -21,31 +23,31 @@ export default {
                 //饼图
                 videoData: [
                     {
-                        name: '奔驰',
+                        name: 'A级',
                         value: Mock.Random.float(10000, 100000, 0, 2)
                     },
                     {
-                        name: '宝马',
+                        name: 'C级',
                         value: Mock.Random.float(10000, 100000, 0, 2)
                     },
                     {
-                        name: '奥迪',
+                        name: 'E级',
                         value: Mock.Random.float(10000, 100000, 0, 2)
                     },
                     {
-                        name: '本田',
+                        name: 'GLA',
                         value: Mock.Random.float(10000, 100000, 0, 2)
                     },
                     {
-                        name: '丰田',
+                        name: 'GLB',
                         value: Mock.Random.float(10000, 100000, 0, 2)
                     },
                     {
-                        name: '凯迪拉克',
+                        name: 'GLC',
                         value: Mock.Random.float(10000, 100000, 0, 2)
                     },
                     {
-                        name: '红旗',
+                        name: 'GLE',
                         value: Mock.Random.float(10000, 100000, 0, 2)
                     }
                 ],
@@ -102,58 +104,58 @@ export default {
                 },
                 tableData: [
                     {
-                        name: '奔驰',
-                        todayBuy: Mock.Random.float(100, 1000, 0, 0),
-                        monthBuy: Mock.Random.float(3000, 5000, 0, 0),
-                        totalBuy: Mock.Random.float(40000, 1000000, 0, 0)
+                        name: 'A-class',
+                        todayBuy: Mock.Random.float(10, 50, 0, 0),
+                        monthBuy: Mock.Random.float(300, 1100, 0, 0),
+                        totalBuy: Mock.Random.float(3000, 50000, 0, 0)
                     },
                     {
-                        name: '宝马',
-                        todayBuy: Mock.Random.float(100, 1000, 0, 0),
-                        monthBuy: Mock.Random.float(3000, 5000, 0, 0),
-                        totalBuy: Mock.Random.float(40000, 1000000, 0, 0)
+                        name: 'C-class',
+                        todayBuy: Mock.Random.float(10, 50, 0, 0),
+                        monthBuy: Mock.Random.float(300, 1100, 0, 0),
+                        totalBuy: Mock.Random.float(3000, 50000, 0, 0)
                     },
                     {
-                        name: '奥迪',
-                        todayBuy: Mock.Random.float(100, 1000, 0, 0),
-                        monthBuy: Mock.Random.float(3000, 5000, 0, 0),
-                        totalBuy: Mock.Random.float(40000, 1000000, 0, 0)
+                        name: 'E-class',
+                        todayBuy: Mock.Random.float(10, 50, 0, 0),
+                        monthBuy: Mock.Random.float(300, 1100, 0, 0),
+                        totalBuy: Mock.Random.float(3000, 50000, 0, 0)
                     },
                     {
-                        name: '本田',
-                        todayBuy: Mock.Random.float(100, 1000, 0, 0),
-                        monthBuy: Mock.Random.float(3000, 5000, 0, 0),
-                        totalBuy: Mock.Random.float(40000, 1000000, 0, 0)
+                        name: 'S-class(进口)',
+                        todayBuy: Mock.Random.float(10, 50, 0, 0),
+                        monthBuy: Mock.Random.float(300, 1100, 0, 0),
+                        totalBuy: Mock.Random.float(3000, 50000, 0, 0)
                     },
                     {
-                        name: '丰田',
-                        todayBuy: Mock.Random.float(100, 1000, 0, 0),
-                        monthBuy: Mock.Random.float(3000, 5000, 0, 0),
-                        totalBuy: Mock.Random.float(40000, 1000000, 0, 0)
+                        name: 'GLA',
+                        todayBuy: Mock.Random.float(10, 50, 0, 0),
+                        monthBuy: Mock.Random.float(300, 1100, 0, 0),
+                        totalBuy: Mock.Random.float(3000, 50000, 0, 0)
                     },
                     {
-                        name: '凯迪拉克',
-                        todayBuy: Mock.Random.float(100, 1000, 0, 0),
-                        monthBuy: Mock.Random.float(3000, 5000, 0, 0),
-                        totalBuy: Mock.Random.float(40000, 1000000, 0, 0)
+                        name: 'GLB',
+                        todayBuy: Mock.Random.float(10, 50, 0, 0),
+                        monthBuy: Mock.Random.float(300, 1100, 0, 0),
+                        totalBuy: Mock.Random.float(3000, 50000, 0, 0)
                     },
                     {
-                        name: '红旗',
-                        todayBuy: Mock.Random.float(100, 1000, 0, 0),
-                        monthBuy: Mock.Random.float(3000, 5000, 0, 0),
-                        totalBuy: Mock.Random.float(40000, 1000000, 0, 0)
+                        name: 'GLC',
+                        todayBuy: Mock.Random.float(10, 50, 0, 0),
+                        monthBuy: Mock.Random.float(300, 1100, 0, 0),
+                        totalBuy: Mock.Random.float(3000, 50000, 0, 0)
                     },
                     {
-                        name: '沃尔沃',
-                        todayBuy: Mock.Random.float(100, 1000, 0, 0),
-                        monthBuy: Mock.Random.float(3000, 5000, 0, 0),
-                        totalBuy: Mock.Random.float(40000, 1000000, 0, 0)
+                        name: 'GLE',
+                        todayBuy: Mock.Random.float(10, 50, 0, 0),
+                        monthBuy: Mock.Random.float(300, 1100, 0, 0),
+                        totalBuy: Mock.Random.float(3000, 50000, 0, 0)
                     },
                     {
-                        name: '保时捷',
-                        todayBuy: Mock.Random.float(100, 1000, 0, 0),
-                        monthBuy: Mock.Random.float(3000, 5000, 0, 0),
-                        totalBuy: Mock.Random.float(40000, 1000000, 0, 0)
+                        name: 'GLS(进口)',
+                        todayBuy: Mock.Random.float(10, 50, 0, 0),
+                        monthBuy: Mock.Random.float(300, 1100, 0, 0),
+                        totalBuy: Mock.Random.float(3000, 50000, 0, 0)
                     }
                 ]
             }

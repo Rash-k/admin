@@ -5,12 +5,6 @@
         <el-form-item label="姓名">
           <el-input v-model="queryParams.name" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="是否vip">
-          <el-select v-model="queryParams.isVip" clearable placeholder="请选择">
-            <el-option key="index0" label="vip" value="1"></el-option>
-            <el-option key="index1" label="非vip" value="0"></el-option>
-          </el-select>
-        </el-form-item>
       </el-form>
       <div class="button">
         <el-button type="primary" @click="searchCustomer" class="search">搜索</el-button>
@@ -41,14 +35,6 @@
           prop="age"
           label="年龄">
       </el-table-column>
-        <el-table-column
-            prop="isVip"
-            label="是否vip">
-          <template slot-scope="scope">
-            <el-tag v-if="scope.row.isVip === 1" type="success">vip</el-tag>
-            <el-tag v-if="scope.row.isVip === 0" type="danger">非vip</el-tag>
-          </template>
-        </el-table-column>
       <el-table-column
           prop="model"
           label="购买车型">
@@ -110,12 +96,6 @@
         <el-form-item label="年龄" :label-width="formLabelWidth">
           <el-input v-model="operateForm.age" autocomplete="off" placeholder="请输入年龄"></el-input>
         </el-form-item>
-        <el-form-item label="vip" :label-width="formLabelWidth">
-          <el-select v-model="operateForm.isVip" placeholder="请选择">
-            <el-option key="1" value="1" label="vip"></el-option>
-            <el-option key="0" value="0" label="非vip"></el-option>
-          </el-select>
-        </el-form-item>
         <el-form-item label="购买车型" :label-width="formLabelWidth">
           <el-input v-model="operateForm.model" autocomplete="off" placeholder="请输入购买车型"></el-input>
         </el-form-item>
@@ -156,8 +136,7 @@ export default {
           operateForm: {},
           formLabelWidth: '100px',
           queryParams: {
-            sex: undefined,
-            isVip: undefined
+            sex: undefined
           },
           loading: false,
             paginations:{
@@ -170,7 +149,7 @@ export default {
             customerData:[],
             allCustomerData:[],
             fileterCustomerData:[],
-            keys: ['_id','name','sex','age','isVip','model','totalAmount','saleDate','address','telephone'],
+            keys: ['_id','name','sex','age','model','totalAmount','saleDate','address','telephone'],
         }
     },
     methods:{
@@ -226,7 +205,6 @@ export default {
             {title:'姓名',key:'name'},
             {title:'性别',key:'sex'},
             {title:'年龄',key:'age'},
-            {title:'是否vip',key:'isVip'},
             {title:'购买车型',key:'model'},
             {title:'金额',key:'totalAmount'},
             {title:'购买时间',key:'saleDate'},

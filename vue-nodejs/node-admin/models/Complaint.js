@@ -4,28 +4,25 @@ const scheme = new mongoose.Schema({
     name:{
         type:String,
     },
-    sex:{
+    complaintModel:{
         type:String,
     },
-    age:{
+    complaintReason:{
         type:String,
+    },
+    complaintDate:{
+        type:Date,
     },
     telephone:{
         type:String,
     },
-    address:{
+    treatmentResult:{
         type:String,
     },
-    model:{
-        type:String
-    },
-    saleDate:{
-        type:Date,
-    },
-    totalAmount:{
+    complaintStatus:{
         type:String
     }
 })
 
 
-module.exports=mongoose.model('Customer',scheme)
+module.exports=mongoose.model('Complaint',scheme)

@@ -1,15 +1,15 @@
 <template>
   <div class="table">
     <div class="manager-header">
-      <Form inline class="myForm">
-        <el-col>
+      <el-form inline class="myForm">
+        <el-form-item label="订单状态">
           <el-select v-model="queryParams.priceStatus" placeholder="请选择" clearable>
             <el-option key="1" value="1" label="成功"></el-option>
             <el-option key="2" value="2" label="沟通中"></el-option>
             <el-option key="3" value="3" label="失败"></el-option>
           </el-select>
-        </el-col>
-      </Form>
+        </el-form-item>
+      </el-form>
       <div class="button">
         <el-button type="primary" @click="searchPrice" class="search">搜索</el-button>
         <el-button type="primary" class="add" @click="openAdd()">新增</el-button>
@@ -170,11 +170,9 @@
         :visible.sync="successOpen"
         width="30%">
      <el-form>
-       <el-form-item label="是否为vip客户">
-         <el-select v-model="addForm.isVip" placeholder="请选择">
-           <el-option key="1" value="1" label="vip"></el-option>
-           <el-option key="0" value="0" label="非vip"></el-option>
-         </el-select>
+       <el-form-item>
+         <el-input placeholder="确定将订单状态更改为成功吗？" disabled>
+         </el-input>
        </el-form-item>
      </el-form>
       <div slot="footer" class="dialog-footer">

@@ -10,8 +10,7 @@
           </div>
         </div>
         <div class="loginInfo">
-          <p>上次登陆时间:<span>{{currentDate}}</span></p>
-          <p>上次登录地点:<span>北京</span></p>
+          <p>登陆时间:<span>{{currentDate}}</span></p>
         </div>
       </el-card>
       <el-card shadow="hover" style="height: 522px;margin-top: 20px">
@@ -103,10 +102,10 @@ export default {
       //存储表格数据
       tableData:[],
       tableLabel: {
-        name:'品牌',
+        name:'车型',
         todayBuy:'今日销售辆数',
-        monthBuy:'本日销售辆数',
-        totalBuy:'总销售辆数'
+        monthBuy:'本月销售辆数',
+        totalBuy:'年销售辆数'
       },
       //图表数据
       echartData:{

@@ -6,7 +6,7 @@
             background-color="#304156"
             text-color="#fff"
             active-text-color="#409eff">
-            <h1 class="title">客户后台管理系统</h1>
+            <h1 class="title">后台管理系统</h1>
             <router-link to='/home'>
                 <el-menu-item index='0'>
                     <i class="el-icon-s-order"></i>
@@ -53,10 +53,10 @@ export default {
               },
                 {
                     icon:'delete-solid',
-                    name:'库存管理',
+                    name:'保险管理',
                     path:'stock',
                     children:[
-                      {path:'warehouseManage', icon: 's-help', name:'仓库管理'}
+                      {path:'warehouseManage', icon: 's-help', name:'客户车辆保险'}
                 ]
                   },
                 {

@@ -2,7 +2,7 @@
     <div class="register">
         <section class="form_container">
             <div class="manage_tip">
-                <span class="title">米修在线后台管理系统</span>
+                <span class="title">奔驰4S店管理系统</span>
                 <el-form :model="registerUser" :rules="rules" ref="registerForm" label-width="80px" class="registerForm">
                     <el-form-item label="用户名" prop="name">
                         <el-input v-model="registerUser.name" placeholder="请输入用户名"></el-input>
@@ -94,7 +94,7 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  background: url(../../assets/img/back.jpg) no-repeat center center;
+  background: url(../../assets/img/backGround.jpg) no-repeat center center;
   background-size: 100% 100%;
 }
 .form_container {
