@@ -1,7 +1,7 @@
 module.exports = app => {
     const express = require('express')
     const router = express.Router()
-    const Maintain = require('../../models/Maintain')
+    const Maintain = require('../../models/Maintains')
     const passport = require('passport')
 
 
@@ -29,26 +29,12 @@ module.exports = app => {
         const maintainFields = {}
         if (req.body.name) maintainFields.name = req.body.name
         if (req.body.model) maintainFields.model = req.body.model
-        if (req.body.kilometre) maintainFields.kilometre = req.body.kilometre
+        if (req.body.content) maintainFields.content = req.body.content
         if (req.body.cost) maintainFields.cost = req.body.cost
         if (req.body.maintenanceDate) maintainFields.maintenanceDate = req.body.maintenanceDate
         new Maintain(maintainFields).save().then(maintain=>{
             res.json(maintain)
         })
-    })
-
-    router.post('/maintainEdit',passport.authenticate('jwt',{session:false}),(req,res) =>{
-        const maintainFields = {}
-        if (req.body.name) maintainFields.name = req.body.name
-        if (req.body.model) maintainFields.model = req.body.model
-        if (req.body.kilometre) maintainFields.kilometre = req.body.kilometre
-        if (req.body.cost) maintainFields.cost  = req.body.cost
-        if (req.body.maintenanceDate) maintainFields.maintenanceDate = req.body.maintenanceDate
-        Maintain.findByIdAndUpdate(
-            {_id:req.body._id},
-            {$set:maintainFields},
-            {new:true}
-            ).then(maintain => res.json(maintain))
     })
 
     router.post('/maintainDel/:id',passport.authenticate('jwt',{session:false}),(req,res)=>{

@@ -18,7 +18,6 @@
       <div class="button">
         <el-button type="primary" @click="searchCustomer" class="search">搜索</el-button>
         <el-button type="primary" class="add" @click="openAdd()">新增</el-button>
-        <el-button type="primary" @click="download" class="export">导出Excel</el-button>
       </div>
     </div>
     <el-table
@@ -36,6 +35,10 @@
       <el-table-column
           prop="model"
           label="车型">
+      </el-table-column>
+      <el-table-column
+          prop="content"
+          label="保养内容">
       </el-table-column>
       <el-table-column
           prop="cost"
@@ -76,18 +79,21 @@
         </div>
       </el-col>
     </el-row>
-    <el-dialog :title="operateType === 'add' ? '添加' : '更新'" :visible.sync="isShow" width="30%">
+    <el-dialog title="添加" :visible.sync="isShow" width="30%">
       <el-form :model="operateForm">
         <el-form-item label="姓名" :label-width="formLabelWidth">
           <el-input v-model="operateForm.name" autocomplete="off" placeholder="请输入姓名"></el-input>
         </el-form-item>
-        <el-form-item label="购买车型" :label-width="formLabelWidth">
-          <el-input v-model="operateForm.model" autocomplete="off" placeholder="请输入购买车型"></el-input>
+        <el-form-item label="车型" :label-width="formLabelWidth">
+          <el-input v-model="operateForm.model" autocomplete="off" placeholder="请输入车型"></el-input>
+        </el-form-item>
+        <el-form-item label="保养内容" :label-width="formLabelWidth">
+          <el-input v-model="operateForm.content" autocomplete="off" placeholder="请输入保养内容"></el-input>
         </el-form-item>
         <el-form-item label="金额" :label-width="formLabelWidth">
           <el-input v-model="operateForm.cost" autocomplete="off" placeholder="请输入金额"></el-input>
         </el-form-item>
-        <el-form-item label="购买时间" :label-width="formLabelWidth">
+        <el-form-item label="保养时间" :label-width="formLabelWidth">
           <el-date-picker
               v-model="operateForm.maintenanceDate"
               type="date"
@@ -104,14 +110,12 @@
 </template>
 
 <script>
-import { formatDate, export2Excel } from '../../utils/index'
+import { formatDate } from '../../utils/index'
 export default {
   data(){
     return {
       formatDate,
-      operateType: 'add',
       isShow:false,
-      dialogVisible:false,
       operateForm: {},
       formLabelWidth: '100px',
       time: [],
@@ -129,8 +133,7 @@ export default {
       },
       maintainData:[],
       allMaintainData:[],
-      filterMaintainData:[],
-      keys: ['_id','name','model','cost','maintenanceDate'],
+      filterMaintainData:[]
     }
   },
   methods:{
@@ -147,35 +150,18 @@ export default {
         this.loading = false
       }).catch(err=>console.log(err))
     },
-    openEdit(row){
-      this.operateType = 'edit';
-      this.isShow=true;
-      this.operateForm={...row};
-    },
     openAdd(){
-      this.operateType = 'add';
       this.isShow=true;
       this.operateForm={};
     },
     determine(){
-      if (this.operateType === 'add') {
         this.$http.post('maintains/maintainAdd', this.operateForm).then(
             res => {
-              // console.log(res.data);
+              console.log(res.data);
               this.isShow=false;
               this.getMaintains();
             }
         )
-      } else if (this.operateType === 'edit'){
-        // /${this.operateForm._id}
-        this.$http.post('maintains/maintainEdit', this.operateForm).then(
-            res => {
-              // console.log(res.data);
-              this.isShow=false;
-              this.getMaintains();
-            }
-        )
-      }
     },
     handleDelete(row){
       this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
@@ -198,28 +184,6 @@ export default {
     },
     searchCustomer(){
       this.getMaintains()
-    },
-    download() {
-      if (this.allMaintainData.length !== 0) {
-        let list = [
-          {title:'编号',key:'_id'},
-          {title:'姓名',key:'name'},
-          {title:'车型',key:'model'},
-          {title:'费用',key:'cost'},
-          {title:'保养日期',key:'maintenanceDate'},
-        ]
-        let newList = []
-        list.forEach((item,index)=>{
-          this.keys.forEach((itemA,indexA)=>{
-            if(item.key===itemA){
-              newList.push(item)
-            }
-          })
-        })
-        export2Excel(newList,this.allMaintainData)
-      } else {
-        this.$message.error('没有数据！');
-      }
     },
     setPaginations(){
       this.paginations.total = this.allMaintainData.length

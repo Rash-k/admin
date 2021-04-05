@@ -6,8 +6,8 @@ const scheme = new mongoose.Schema({
     model: {
         type: String
     },
-    kilometre: {
-        type: Number
+    content: {
+        type: String
     },
     cost: {
         type: Number

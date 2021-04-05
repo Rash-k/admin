@@ -15,9 +15,9 @@ require('./plugins/db')(app)
 require('./routers/api/users')(app)
 require('./routers/api/profiles')(app)
 require('./routers/api/customers')(app)
-require('./routers/api/suppliers')(app)
+require('./routers/api/repairs')(app)
 require('./routers/api/prices')(app)
-require('./routers/api/maintain')(app)
+require('./routers/api/maintains')(app)
 require('./routers/api/complaint')(app)
 //passport初始化
 
