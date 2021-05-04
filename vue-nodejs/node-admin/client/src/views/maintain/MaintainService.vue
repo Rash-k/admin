@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import { formatDate } from '../../utils/index'
+import { formatDate } from '../../utils'
 export default {
   data(){
     return {

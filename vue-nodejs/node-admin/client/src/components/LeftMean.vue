@@ -61,14 +61,28 @@ export default {
                 //   },
                 {
                     icon:'upload',
-                    name:'售后服务',
-                    path:'afterSale',
+                    name:'保养管理',
+                    path:'maintain',
                     children:[
-                      {path:'maintainService', icon: 's-grid', name:'保养服务'},
-                      {path:'repairService', icon: 's-tools', name:'维修服务'},
-                      {path:'complaintService', icon: 'warning', name:'投诉服务'}
+                      {path:'maintainService', icon: 's-grid', name:'保养服务'}
                     ]
                 },
+              {
+                  icon:'upload',
+                  name:'维修管理',
+                  path:'repair',
+                  children:[
+                    {path:'repairService', icon: 's-tools', name:'维修服务'}
+                  ]
+              },
+              {
+                  icon:'upload',
+                  name:'投诉管理',
+                  path:'complaint',
+                  children:[
+                    {path:'complaintService', icon: 'warning', name:'投诉服务'}
+                  ]
+              },
                 // {
                 //     icon:'user-solid',
                 //     name:'信息管理',
@@ -79,11 +93,6 @@ export default {
             ]
         }
     },
-  // computed: {
-  //   isCollapsed(){
-  //     return this.$store.state.isCollapse
-  //   },
-  // }
 }
 </script>
 

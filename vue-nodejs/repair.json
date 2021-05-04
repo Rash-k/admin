@@ -1,0 +1,4 @@
+[
+  { "name" : "杜育宽", "model" : "S-500L", "content" : "更换火花塞", "cost" : "2000", "repairDate" : "2020-08-11" },
+  { "name" : "武金铎", "model" : "E-300L", "content" : "更换滤芯", "cost" : "1000", "repairDate" : "2020-05-23" }
+]

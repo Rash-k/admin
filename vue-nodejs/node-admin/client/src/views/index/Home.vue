@@ -6,7 +6,7 @@
           <img :src="userImg">
           <div class="userInfo">
             <p class="name">{{ user.name }}</p>
-            <p class="access">{{ user.identity === 'manager'? '管理员' : '员工' }}</p>
+            <p class="access">{{ user.identity === 'manager'? '销售' : '客户' }}</p>
           </div>
         </div>
         <div class="loginInfo">

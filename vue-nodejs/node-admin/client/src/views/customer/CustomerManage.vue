@@ -1,6 +1,6 @@
 <template>
   <div class="table">
-    <div class="manager-header">
+    <div class="manager-header" v-if="user.identity === 'manager'">
       <el-form inline class="myForm">
         <el-form-item label="姓名">
           <el-input v-model="queryParams.name" placeholder="请输入"></el-input>
@@ -58,7 +58,7 @@
           prop="telephone"
           label="联系电话">
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作" v-if="user.identity === 'manager'">
         <template slot-scope="scope">
           <el-button
               size="mini"
@@ -256,11 +256,12 @@ export default {
     },
     computed:{
         user(){
-            return this.$store.getters.user
+          return this.$store.getters.user
         }
     },
     created(){
         this.getCustomers()
+        console.log(this.$store.getters.user)
     },
 }
 </script>
