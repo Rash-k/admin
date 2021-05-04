@@ -2,11 +2,10 @@
   <div class="table">
     <div class="manager-header">
       <el-form inline class="myForm">
-        <el-form-item label="订单状态">
-          <el-select v-model="queryParams.priceStatus" placeholder="请选择" clearable>
-            <el-option key="1" value="1" label="成功"></el-option>
-            <el-option key="2" value="2" label="沟通中"></el-option>
-            <el-option key="3" value="3" label="失败"></el-option>
+        <el-form-item label="投诉状态">
+          <el-select v-model="queryParams.complaintStatus" placeholder="请选择" clearable>
+            <el-option key="0" value="0" label="处理中"></el-option>
+            <el-option key="1" value="1" label="已解决"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -29,18 +28,18 @@
           label="姓名">
       </el-table-column>
       <el-table-column
-          prop="model"
+          prop="complaintModel"
           label="投诉车型">
       </el-table-column>
       <el-table-column
-          prop="amount"
+          prop="complaintReason"
           label="投诉原因">
       </el-table-column>
       <el-table-column
-          prop="priceDate"
+          prop="complaintDate"
           label="投诉日期">
         <template slot-scope="scope">
-          {{ formatDate(scope.row.priceDate) }}
+          {{ formatDate(scope.row.complaintDate) }}
         </template>
       </el-table-column>
       <el-table-column
@@ -48,11 +47,14 @@
           label="联系电话">
       </el-table-column>
       <el-table-column
-          prop="priceFailReason"
+          prop="complaintStatus"
           label="状态">
+        <template slot-scope="scope">
+          {{ scope.row.complaintStatus === '0' ? '处理中' : '已解决' }}
+        </template>
       </el-table-column>
       <el-table-column
-          prop="priceFailReason"
+          prop="treatmentResult"
           label="处理结果">
       </el-table-column>
       <el-table-column
@@ -63,10 +65,15 @@
               size="mini"
               type="text"
               icon="el-icon-edit"
-              v-if="scope.row.priceStatus === '2'"
-              :disabled="scope.row.priceStatus === '1' ? true : false"
+              :disabled="scope.row.complaintStatus === '1' ? true : false"
               @click="closeStatus(scope.row)"
           >处理</el-button>
+          <el-button
+              size="mini"
+              type="text"
+              icon="el-icon-edit"
+              @click="delHandel(scope.row)"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -85,20 +92,20 @@
         </div>
       </el-col>
     </el-row>
-    <el-dialog title="新增订单" :visible.sync="isShow" width="30%">
+    <el-dialog title="新增投诉" :visible.sync="isShow" width="30%">
       <el-form :model="operateForm">
         <el-form-item label="姓名" prop="name" :label-width="formLabelWidth">
           <el-input v-model="operateForm.name" autocomplete="off" placeholder="请输入姓名"></el-input>
         </el-form-item>
         <el-form-item label="投诉车型" prop="model" :label-width="formLabelWidth">
-          <el-input v-model="operateForm.model" autocomplete="off" placeholder="投诉车型"></el-input>
+          <el-input v-model="operateForm.complaintModel" autocomplete="off" placeholder="投诉车型"></el-input>
         </el-form-item>
         <el-form-item label="投诉原因" prop="amount" :label-width="formLabelWidth">
-          <el-input v-model="operateForm.amount" autocomplete="off" placeholder="投诉原因"></el-input>
+          <el-input v-model="operateForm.complaintReason" autocomplete="off" placeholder="投诉原因"></el-input>
         </el-form-item>
         <el-form-item label="投诉日期" :label-width="formLabelWidth">
           <el-date-picker
-              v-model="operateForm.priceDate"
+              v-model="operateForm.complaintDate"
               type="date"
               placeholder="选择日期">
           </el-date-picker>
@@ -118,7 +125,7 @@
         width="30%">
       <el-form>
         <el-form-item label="处理结果" :label-width="formLabelWidth">
-          <el-input v-model="priceFailReason" autocomplete="off" placeholder="请输入订单失败原因"></el-input>
+          <el-input v-model="treatmentResult" autocomplete="off" placeholder="请输入投诉处理结果"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -136,9 +143,8 @@ export default {
         return {
           formatDate,
           _id:'',
-          priceFailReason: '',
+          treatmentResult: '',
           isShow:false,
-          successOpen:false,
           failOpen: false,
           operateForm: {},
           addForm: {
@@ -154,7 +160,7 @@ export default {
           },
           formLabelWidth: '100px',
           queryParams: {
-            priceStatus: undefined
+            complaintStatus: undefined
           },
           loading: false,
             paginations:{
@@ -173,7 +179,7 @@ export default {
       getPrice(){
         this.loading = true
         let queryParams = Object.assign(this.queryParams)
-            this.$http.get('prices', {params: queryParams})
+            this.$http.get('complaints', {params: queryParams})
             .then(res=>{
                 this.allPriceData = res.data
                 this.fileterPriceData = res.data
@@ -183,38 +189,16 @@ export default {
             })
             .catch(err=>console.log(err))
         },
-      openEdit(row){
-        this.operateType = 'edit';
-        this.isShow=true;
-        this.operateForm={...row};
-      },
       closeStatus(row){
         this._id = row._id
         this.failOpen = true
       },
       openAdd(){
-        this.operateType = 'add';
         this.isShow=true;
         this.operateForm={};
       },
-      changeSuccess(){
-        let addForm = Object.assign(this.addForm)
-        this.$http.post('prices/changeStatus', {_id: this._id})
-            .then(async res=>{
-              await this.$http.post('customers/customerAdd', addForm).then(res => {
-                this.successOpen = false
-                this.$message({
-                  type: 'success',
-                  message: '成功!'
-                });
-                this.getPrice()
-              }).catch(err => {
-                console.log(err);
-              })
-            }).catch(err=>console.log(err))
-      },
       changeFail(){
-        this.$http.post('prices/changeStatusFail', {_id: this._id, priceFailReason: this.priceFailReason})
+        this.$http.post('complaints/complaintsHandle', {_id: this._id, treatmentResult: this.treatmentResult})
             .then(res=>{
               this.failOpen = false
               this.$message({
@@ -225,10 +209,29 @@ export default {
             }).catch(err=>console.log(err))
       },
       determine(){
-              this.$http.post('prices/pricesAdd', this.operateForm).then(res => {
+              this.$http.post('complaints/complaintsAdd', this.operateForm).then(res => {
                     this.isShow=false;
                     this.getPrice();
                   })
+      },
+      delHandel(row){
+        this.$confirm('此操作将永久删除该投诉, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$http.post(`complaints/complaintsDel/${row._id}`)
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+          this.getPrice()
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        })
       },
       searchPrice(){
        this.getPrice();
