@@ -51,14 +51,14 @@ export default {
                       {path:'customerPrice', icon: 's-goods', name:'客户订单'}
                     ]
               },
-                {
-                    icon:'delete-solid',
-                    name:'保险管理',
-                    path:'stock',
-                    children:[
-                      {path:'warehouseManage', icon: 's-help', name:'客户车辆保险'}
-                ]
-                  },
+                // {
+                //     icon:'delete-solid',
+                //     name:'保险管理',
+                //     path:'stock',
+                //     children:[
+                //       {path:'warehouseManage', icon: 's-help', name:'客户车辆保险'}
+                // ]
+                //   },
                 {
                     icon:'upload',
                     name:'售后服务',
@@ -69,12 +69,12 @@ export default {
                       {path:'complaintService', icon: 'warning', name:'投诉服务'}
                     ]
                 },
-                {
-                    icon:'user-solid',
-                    name:'信息管理',
-                    path:'info',
-                    children:[{path:'infoshow',icon: 's-claim', name:'个人信息'}]
-                },
+                // {
+                //     icon:'user-solid',
+                //     name:'信息管理',
+                //     path:'info',
+                //     children:[{path:'infoshow',icon: 's-claim', name:'个人信息'}]
+                // },
 
             ]
         }

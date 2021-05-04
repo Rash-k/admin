@@ -37,6 +37,20 @@ module.exports = app => {
         })
     })
 
+    router.post('/maintainEdit', passport.authenticate('jwt', {session:false}),(req,res) => {
+        const maintainFields = {}
+        if (req.body.name) maintainFields.name = req.body.name
+        if (req.body.model) maintainFields.model = req.body.model
+        if (req.body.content) maintainFields.content = req.body.content
+        if (req.body.cost) maintainFields.cost = req.body.cost
+        if (req.body.maintenanceDate) maintainFields.maintenanceDate = req.body.maintenanceDate
+        Maintain.findByIdAndUpdate(
+            {_id:req.body._id},
+            {$set:maintainFields},
+            {new:true}
+        ).then(maintain => res.json(maintain))
+    })
+
     router.post('/maintainDel/:id',passport.authenticate('jwt',{session:false}),(req,res)=>{
         let id = req.params.id
         Maintain.findOneAndDelete({_id:id}).then(Maintain=>{

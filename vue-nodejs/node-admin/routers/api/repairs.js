@@ -9,32 +9,57 @@ module.exports= app =>{
 
     //获取供应商信息
     router.get('/',passport.authenticate('jwt',{session:false}),(req,res)=>{
-        Repair.find().then(Repair=>{
-            if(!Repair){
-                return res.status(404).json('没有任何信息')
-            }
-            res.json(Repair)
-        }).catch(err=>res.status(404).json(err))
+        let startTime = req.query.startTime
+        let endTime = req.query.endTime
+        if (startTime && endTime) {
+            Repair.find({repairDate: {$gte: startTime, $lt: endTime}}).then(Repair=> {
+                if (!Repair) {
+                    return res.status(404).json('没有任何信息')
+                }
+                res.json(Repair)
+            })
+        }else {
+            Repair.find().then(Repair=> {
+                if (!Repair) {
+                    return res.status(404).json('没有任何信息')
+                }
+                res.json(Repair)
+            })
+        }
     })
 
     // 添加客户信息
-    router.post('/RepairsAdd',passport.authenticate('jwt',{session:false}),(req,res)=>{
+    router.post('/repairsAdd',passport.authenticate('jwt',{session:false}),(req,res)=>{
         const RepairFields = {}
-        if(req.body.RepairName) RepairFields.RepairName = req.body.RepairName
-        if(req.body.vehicleName) RepairFields.vehicleName = req.body.vehicleName
-        if(req.body.modelCode) RepairFields.modelCode = req.body.modelCode
-        if(req.body.contacts) RepairFields.contacts = req.body.contacts
-        if(req.body.telephone) RepairFields.telephone = req.body.telephone
+        if(req.body.name) RepairFields.name = req.body.name
+        if(req.body.model) RepairFields.model = req.body.model
+        if(req.body.content) RepairFields.content = req.body.content
+        if(req.body.cost) RepairFields.cost = req.body.cost
+        if(req.body.repairDate) RepairFields.repairDate = req.body.repairDate
         new Repair(RepairFields).save().then(Repair=>{
             res.json(Repair)
         })
     })
+    router.post('/repairsEdit', passport.authenticate('jwt', {session:false}),(req,res) => {
+        const RepairFields = {}
+        if (req.body.name) RepairFields.name = req.body.name
+        if (req.body.model) RepairFields.model = req.body.model
+        if (req.body.content) RepairFields.content = req.body.content
+        if (req.body.cost) RepairFields.cost = req.body.cost
+        if (req.body.repairDate) RepairFields.repairDate = req.body.repairDate
+        Repair.findByIdAndUpdate(
+            {_id:req.body._id},
+            {$set:RepairFields},
+            {new:true}
+        ).then(Repair => res.json(Repair))
+    })
     //删除信息
-    router.post('/RepairsDelete/:id',passport.authenticate('jwt',{session:false}),(req,res)=>{
+    router.post('/repairsDelete/:id',passport.authenticate('jwt',{session:false}),(req,res)=>{
         Repair.findOneAndDelete({_id:req.params.id}).then(Repair=>{
             Repair.save().then(Repair=>res.json(Repair))
         }).catch(err=>res.status(404).json('删除成功'))
     })
 
-    app.use('/api/repairs',router)
+    app.use('/' +
+        'api/repairs',router)
 }

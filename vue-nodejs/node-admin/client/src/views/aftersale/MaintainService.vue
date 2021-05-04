@@ -79,7 +79,7 @@
         </div>
       </el-col>
     </el-row>
-    <el-dialog title="添加" :visible.sync="isShow" width="30%">
+    <el-dialog :title="operateType === 'add' ? '保养记录添加' : '保养记录更新'" :visible.sync="isShow" width="30%">
       <el-form :model="operateForm">
         <el-form-item label="姓名" :label-width="formLabelWidth">
           <el-input v-model="operateForm.name" autocomplete="off" placeholder="请输入姓名"></el-input>
@@ -117,6 +117,7 @@ export default {
       formatDate,
       isShow:false,
       operateForm: {},
+      operateType: 'add',
       formLabelWidth: '100px',
       time: [],
       queryParams: {
@@ -151,17 +152,31 @@ export default {
       }).catch(err=>console.log(err))
     },
     openAdd(){
+      this.operateType = 'add';
       this.isShow=true;
       this.operateForm={};
     },
+    openEdit(row){
+      this.operateType = 'edit';
+      this.isShow=true;
+      this.operateForm={...row};
+    },
     determine(){
+      if (this.operateType === 'add') {
         this.$http.post('maintains/maintainAdd', this.operateForm).then(
-            res => {
-              console.log(res.data);
-              this.isShow=false;
-              this.getMaintains();
-            }
+                res => {
+                  this.isShow=false;
+                  this.getMaintains();
+                }
         )
+      } else if (this.operateType === 'edit'){
+        this.$http.post('maintains/maintainEdit', this.operateForm).then(
+                res => {
+                  this.isShow=false;
+                  this.getMaintains();
+                }
+        )
+      }
     },
     handleDelete(row){
       this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {

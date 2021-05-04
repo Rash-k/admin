@@ -22,7 +22,7 @@
         style="width: 100%">
       <el-table-column
           prop="_id"
-          label="订单编号">
+          label="编号">
       </el-table-column>
       <el-table-column
           prop="name"

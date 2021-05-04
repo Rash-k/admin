@@ -29,8 +29,8 @@ const router = new Router({
       children:[
         {path:'',component:Home},
         {path:'/home',name:'home',component:Home},
-        {path:'/infoshow',name:'infoshow',component:InfoShow},
-        {path:'/warehouseManage',name:'warehouseManage',component:FundList},
+        // {path:'/infoshow',name:'infoshow',component:InfoShow},
+        // {path:'/warehouseManage',name:'warehouseManage',component:FundList},
         {path:'/customerManage',name:'customerManage',component:CustomerManage},
         {path:'/customerPrice',name:'customerPrice',component:CustomerPrice},
         {path:'/maintainService',name:'maintainService',component:MaintainService},

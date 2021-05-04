@@ -82,6 +82,7 @@
               size="mini"
               type="text"
               icon="el-icon-edit"
+              v-if="scope.row.priceStatus === '2'"
               :disabled="scope.row.priceStatus === '1' ? true : false"
               @click="openStatus(scope.row)"
           >改为成功</el-button>
