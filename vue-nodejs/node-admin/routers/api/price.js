@@ -2,21 +2,21 @@
 module.exports= app =>{
     const express = require('express')
     const router = express.Router()
-    const Price = require('../../models/Prices')
+    const Price = require('../../models/Price')
     const passport = require('passport')
 
 
     router.get('/',passport.authenticate('jwt',{session:false}),(req,res)=>{
-        let priceStatus = req.query.priceStatus
-        if (!priceStatus) {
-            Price.find().then(Price=>{
+        let state = req.query.state
+        if (!state) {
+            Price.find({state: '2'}).then(Price=>{
                 if(!Price){
                     return res.status(404).json('没有任何信息')
                 }
                 res.json(Price)
             }).catch(err=>res.status(404).json(err))
         }else {
-            Price.find({priceStatus:priceStatus}).then(Price=>{
+            Price.find({state:state}).then(Price=>{
                 if(!Price){
                     return res.status(404).json('没有任何信息')
                 }

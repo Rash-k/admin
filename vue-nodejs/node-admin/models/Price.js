@@ -10,9 +10,6 @@ const scheme = new mongoose.Schema({
     age:{
         type:String,
     },
-    amount:{
-        type:Number,
-    },
     model:{
         type:String,
     },
@@ -22,13 +19,13 @@ const scheme = new mongoose.Schema({
     address:{
         type:String,
     },
-    priceDate:{
+    reserveDate:{
         type:Date,
     },
-    priceStatus:{
+    state:{
         type:String,
     },
-    priceFailReason:{
+    cancelReason:{
         type:String,
     },
 })

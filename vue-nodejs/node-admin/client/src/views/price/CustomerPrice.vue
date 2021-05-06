@@ -23,7 +23,7 @@
         style="width: 100%">
       <el-table-column
           prop="_id"
-          label="订单编号">
+          label="预定编号">
       </el-table-column>
       <el-table-column
           prop="name"
@@ -50,29 +50,25 @@
       </el-table-column>
       <el-table-column
           prop="model"
-          label="购买车型">
+          label="预定车型">
       </el-table-column>
       <el-table-column
-          prop="amount"
-          label="金额">
-      </el-table-column>
-      <el-table-column
-          prop="priceDate"
-          label="订单日期">
+          prop="reserveDate"
+          label="预定日期">
         <template slot-scope="scope">
-          {{ formatDate(scope.row.priceDate) }}
+          {{ formatDate(scope.row.reserveDate) }}
         </template>
       </el-table-column>
       <el-table-column
-          prop="priceStatus"
-          label="订单状态">
+          prop="state"
+          label="状态">
         <template slot-scope="scope">
-          {{ scope.row.priceStatus === "1" ? '成功' : scope.row.priceStatus === "2" ? '沟通中' : '失败' }}
+          {{ scope.row.state === "1" ? '成功' : scope.row.state === "2" ? '待交车' : '已取消' }}
         </template>
       </el-table-column>
       <el-table-column
-          prop="priceFailReason"
-          label="失败原因">
+          prop="cancelReason"
+          label="取消原因">
       </el-table-column>
       <el-table-column
           label="操作"
@@ -82,24 +78,24 @@
               size="mini"
               type="text"
               icon="el-icon-edit"
-              v-if="scope.row.priceStatus === '2'"
-              :disabled="scope.row.priceStatus === '1' ? true : false"
+              v-if="scope.row.state === '2'"
+              :disabled="scope.row.state === '1' ? true : false"
               @click="openStatus(scope.row)"
           >改为成功</el-button>
           <el-button
               size="mini"
               type="text"
               icon="el-icon-edit"
-              v-if="scope.row.priceStatus === '2'"
-              :disabled="scope.row.priceStatus === '1' ? true : false"
+              v-if="scope.row.state === '2'"
+              :disabled="scope.row.state === '1' ? true : false"
               @click="closeStatus(scope.row)"
-          >改为失败</el-button>
-          <el-button
-              size="mini"
-              type="text"
-              icon="el-icon-delete"
-              @click="delPrice(scope.row)"
-          >删除</el-button>
+          >取消</el-button>
+<!--          <el-button-->
+<!--              size="mini"-->
+<!--              type="text"-->
+<!--              icon="el-icon-delete"-->
+<!--              @click="delPrice(scope.row)"-->
+<!--          >删除</el-button>-->
         </template>
       </el-table-column>
     </el-table>
@@ -223,7 +219,7 @@ export default {
           },
           formLabelWidth: '100px',
           queryParams: {
-            priceStatus: undefined
+            state: undefined
           },
           loading: false,
             paginations:{
@@ -280,19 +276,19 @@ export default {
         this.operateForm={};
       },
       changeSuccess(){
-        let addForm = Object.assign(this.addForm)
+        // let addForm = Object.assign(this.addForm)
         this.$http.post('prices/changeStatus', {_id: this._id})
             .then(async res=>{
-              await this.$http.post('customers/customerAdd', addForm).then(res => {
-                this.successOpen = false
-                this.$message({
-                  type: 'success',
-                  message: '成功!'
-                });
-                this.getPrice()
-              }).catch(err => {
-                console.log(err);
-              })
+              // await this.$http.post('customers/customerAdd', addForm).then(res => {
+              //   this.successOpen = false
+              //   this.$message({
+              //     type: 'success',
+              //     message: '成功!'
+              //   });
+              //   this.getPrice()
+              // }).catch(err => {
+              //   console.log(err);
+              // })
             }).catch(err=>console.log(err))
       },
       changeFail(){

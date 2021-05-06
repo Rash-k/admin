@@ -69,7 +69,7 @@ export default {
                     path:'price',
                     children:[
                       {path:'customerPrice', icon: 's-goods', name:'预定管理'},
-                      {path:'customerPrice', icon: 's-goods', name:'成交管理'}
+                      // {path:'customerPrice', icon: 's-goods', name:'成交管理'}
                     ]
               },
                 // {
