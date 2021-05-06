@@ -12,6 +12,7 @@ import CustomerPrice from "@/views/price/CustomerPrice";
 import MaintainService from "@/views/maintain/MaintainService";
 import RepairService from "@/views/repair/RepairService";
 import ComplaintService from "@/views/complaint/ComplaintService";
+import DriveAppointment from "../views/customer/DriveAppointment";
 Vue.use(Router)
 
 const router = new Router({
@@ -31,8 +32,9 @@ const router = new Router({
         {path:'/home',name:'首页',component:Home},
         // {path:'/infoshow',name:'infoshow',component:InfoShow},
         // {path:'/warehouseManage',name:'warehouseManage',component:FundList},
-        {path:'/customerManage',name:'客户管理',component:CustomerManage},
-        {path:'/customerPrice',name:'订单管理',component:CustomerPrice},
+        {path:'/customerManage',name:'客户登记',component:CustomerManage},
+        {path:'/driveAppointment',name:'试驾预约',component:DriveAppointment},
+        {path:'/customerPrice',name:'订购管理',component:CustomerPrice},
         {path:'/maintainService',name:'保养管理',component:MaintainService},
         {path:'/repairService',name:'维修管理',component:RepairService},
         {path:'/complaintService',name:'投诉管理',component:ComplaintService}

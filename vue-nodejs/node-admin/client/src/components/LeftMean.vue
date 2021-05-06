@@ -13,6 +13,7 @@
                     <span class="slot">首页</span>
                 </el-menu-item>
             </router-link>
+              <div v-if="user.identity === 'manager'">
                 <template v-for="item in items">
                     <el-submenu v-if="item.children" :index='item.path' :key='item.path'>
                         <template slot="title">
@@ -27,6 +28,23 @@
                         </router-link>
                     </el-submenu>
                 </template>
+              </div>
+              <div v-if="user.identity === 'emplyee'">
+                <template v-for="item in itemsNew">
+                  <el-submenu v-if="item.children" :index='item.path' :key='item.path'>
+                    <template slot="title">
+                      <i :class="'el-icon-'+item.icon"></i>
+                      <span slot="title">{{ item.name }}</span>
+                    </template>
+                    <router-link v-for="(citem,cindex) in item.children" :to='citem.path' :key="cindex">
+                      <el-menu-item :index='citem.path'>
+                        <i :class="'el-icon-'+citem.icon"></i>
+                        <span slot="title">{{citem.name }}</span>
+                      </el-menu-item>
+                    </router-link>
+                  </el-submenu>
+                </template>
+              </div>
             </el-menu>
         </el-col>
     </el-row>
@@ -41,14 +59,17 @@ export default {
                     icon:'s-custom',
                     name:'客户管理',
                     path:'customer',
-                    children:[{path:'customerManage',icon: 's-check', name:'客户信息'}]
+                    children:[{path:'customerManage',icon: 's-check', name:'购车客户登记'},
+                      // {path:'customerManage',icon: 's-check', name:'意向客户登记'},
+                      {path:'driveAppointment',icon: 's-check', name:'试驾客户预约'}]
                 },
               {
                     icon:'s-shop',
-                    name:'订单管理',
+                    name:'整车销售',
                     path:'price',
                     children:[
-                      {path:'customerPrice', icon: 's-goods', name:'客户订单'}
+                      {path:'customerPrice', icon: 's-goods', name:'预定管理'},
+                      {path:'customerPrice', icon: 's-goods', name:'成交管理'}
                     ]
               },
                 // {
@@ -90,9 +111,57 @@ export default {
                 //     children:[{path:'infoshow',icon: 's-claim', name:'个人信息'}]
                 // },
 
-            ]
+            ],
+          itemsNew:[
+            {
+              icon:'s-custom',
+              name:'试驾管理',
+              path:'customer',
+              children:[{path:'customerManage',icon: 's-check', name:'试驾预约'}]
+            },
+            // {
+            //   icon:'s-shop',
+            //   name:'订单管理',
+            //   path:'price',
+            //   children:[
+            //     {path:'customerPrice', icon: 's-goods', name:'客户订单'}
+            //   ]
+            // },
+            {
+              icon:'upload',
+              name:'保养管理',
+              path:'maintain',
+              children:[
+                {path:'maintainService', icon: 's-grid', name:'保养查询'}
+              ]
+            },
+            {
+              icon:'upload',
+              name:'维修管理',
+              path:'repair',
+              children:[
+                {path:'repairService', icon: 's-tools', name:'维修查询'}
+              ]
+            },
+            {
+              icon:'upload',
+              name:'投诉管理',
+              path:'complaint',
+              children:[
+                {path:'complaintService', icon: 'warning', name:'提交投诉'}
+              ]
+            },
+          ]
         }
     },
+  computed:{
+    user(){
+      return this.$store.getters.user
+    }
+  },
+  created() {
+    console.log(this.$store.getters.user)
+  }
 }
 </script>
 

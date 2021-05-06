@@ -19,6 +19,7 @@ require('./routers/api/repairs')(app)
 require('./routers/api/prices')(app)
 require('./routers/api/maintains')(app)
 require('./routers/api/complaint')(app)
+require('./routers/api/appointment')(app)
 //passport初始化
 
 require('./config/passport')(passport)
