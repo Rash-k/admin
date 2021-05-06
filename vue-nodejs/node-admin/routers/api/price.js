@@ -8,15 +8,16 @@ module.exports= app =>{
 
     router.get('/',passport.authenticate('jwt',{session:false}),(req,res)=>{
         let state = req.query.state
-        if (!state) {
-            Price.find({state: '2'}).then(Price=>{
+        let name = req.query.name
+        if (!name) {
+            Price.find({state:state}).then(Price=>{
                 if(!Price){
                     return res.status(404).json('没有任何信息')
                 }
                 res.json(Price)
             }).catch(err=>res.status(404).json(err))
         }else {
-            Price.find({state:state}).then(Price=>{
+            Price.find({state:state,name:name}).then(Price=>{
                 if(!Price){
                     return res.status(404).json('没有任何信息')
                 }
@@ -31,14 +32,11 @@ module.exports= app =>{
         if(req.body.name) PriceFields.name = req.body.name
         if(req.body.sex) PriceFields.sex = req.body.sex
         if(req.body.age) PriceFields.age = req.body.age
-        if(req.body.amount) PriceFields.amount = req.body.amount
         if(req.body.model) PriceFields.model = req.body.model
-        if(req.body.payWay) PriceFields.payWay = req.body.payWay
         if(req.body.telephone) PriceFields.telephone = req.body.telephone
         if(req.body.address) PriceFields.address = req.body.address
-        if(req.body.priceDate) PriceFields.priceDate = req.body.priceDate
-        if(req.body.priceStatus) PriceFields.priceStatus = req.body.priceStatus
-        if(req.body.priceFailReason) PriceFields.priceFailReason = req.body.priceFailReason
+        if(req.body.reserveDate) PriceFields.reserveDate = req.body.reserveDate
+        PriceFields.state = '2'
         new Price(PriceFields).save().then(Price=>{
             res.json(Price)
         })
@@ -56,17 +54,17 @@ module.exports= app =>{
         let _id = req.body._id
         Price.findOneAndUpdate(
             {_id:_id},
-            {priceStatus: '1', priceFailReason: ''},
+            {state: '1', cancelReason: ''},
             {new:true}
         ).then(Price=>res.json(Price))
     })
 
     router.post('/changeStatusFail',passport.authenticate('jwt',{session:false}),(req,res)=>{
         let _id = req.body._id
-        let priceFailReason = req.body.priceFailReason
+        let cancelReason = req.body.cancelReason
         Price.findOneAndUpdate(
             {_id:_id},
-            {priceStatus: '3', priceFailReason: priceFailReason},
+            {state: '3', cancelReason: cancelReason},
             {new:true}
         ).then(Price=>res.json(Price))
     })

@@ -8,7 +8,6 @@
       </el-form>
       <div class="button">
         <el-button type="primary" @click="searchPrice" class="search">搜索</el-button>
-        <el-button type="primary" class="add" @click="openAdd()">新增</el-button>
       </div>
     </div>
     <el-table
@@ -69,18 +68,8 @@
               size="mini"
               type="text"
               icon="el-icon-edit"
-              v-if="scope.row.state === '2'"
-              :disabled="scope.row.state === '1' ? true : false"
-              @click="openStatus(scope.row)"
-          >改为成功</el-button>
-          <el-button
-              size="mini"
-              type="text"
-              icon="el-icon-edit"
-              v-if="scope.row.state === '2'"
-              :disabled="scope.row.state === '1' ? true : false"
-              @click="closeStatus(scope.row)"
-          >取消</el-button>
+              @click="delPrice(scope.row)"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -99,82 +88,17 @@
         </div>
       </el-col>
     </el-row>
-    <el-dialog title="新增预定" :visible.sync="isShow" width="30%">
-      <el-form :model="operateForm">
-        <el-form-item label="姓名" prop="name" :label-width="formLabelWidth">
-          <el-input v-model="operateForm.name" autocomplete="off" placeholder="请输入姓名"></el-input>
-        </el-form-item>
-        <el-form-item label="性别:" :label-width="formLabelWidth">
-          <el-select v-model="operateForm.sex" placeholder="请选择">
-            <el-option key="1" value="1" label="男"></el-option>
-            <el-option key="0" value="0" label="女"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="年龄" prop="age" :label-width="formLabelWidth">
-          <el-input v-model="operateForm.age" autocomplete="off" placeholder="请输入姓名"></el-input>
-        </el-form-item>
-        <el-form-item label="地址" prop="address" :label-width="formLabelWidth">
-          <el-input v-model="operateForm.address" autocomplete="off" placeholder="请输入地址"></el-input>
-        </el-form-item>
-        <el-form-item label="联系电话" prop="telephone" :label-width="formLabelWidth">
-          <el-input v-model="operateForm.telephone" autocomplete="off" placeholder="请输入联系电话"></el-input>
-        </el-form-item>
-        <el-form-item label="预定车型" prop="model" :label-width="formLabelWidth">
-          <el-input v-model="operateForm.model" autocomplete="off" placeholder="请输入预定车型"></el-input>
-        </el-form-item>
-        <el-form-item label="预定日期" :label-width="formLabelWidth">
-          <el-date-picker
-              v-model="operateForm.priceDate"
-              type="date"
-              placeholder="选择日期">
-          </el-date-picker>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="isShow = false">取 消</el-button>
-        <el-button type="primary" @click="determine()">确 定</el-button>
-      </div>
-    </el-dialog>
-    <el-dialog
-        title="提示"
-        :visible.sync="successOpen"
-        width="30%">
-     <el-form>
-       <el-form-item>
-         <el-input placeholder="确定将预定状态更改为成功吗？" disabled>
-         </el-input>
-       </el-form-item>
-     </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="successOpen = false">取 消</el-button>
-        <el-button type="primary" @click="changeSuccess()">确 定</el-button>
-      </div>
-    </el-dialog>
-    <el-dialog
-        title="提示"
-        :visible.sync="failOpen"
-        width="30%">
-      <el-form>
-        <el-form-item label="失败原因" :label-width="formLabelWidth">
-          <el-input v-model="cancelReason" autocomplete="off" placeholder="请输入取消原因"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="failOpen = false">取 消</el-button>
-        <el-button type="primary" @click="changeFail()">确 定</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import {export2Excel, formatDate} from '../../utils'
+import {formatDate} from '../../utils'
 export default {
     data(){
         return {
           formatDate,
           _id:'',
-          cancelReason: '',
+          priceFailReason: '',
           isShow:false,
           successOpen:false,
           failOpen: false,
@@ -190,7 +114,7 @@ export default {
           },
           formLabelWidth: '100px',
           queryParams: {
-            state: '2',
+            state: '1',
             name: ''
           },
           loading: false,
@@ -220,44 +144,25 @@ export default {
             })
             .catch(err=>console.log(err))
         },
-      openStatus(row){
-        this.successOpen = true
-        this._id = row._id
+      delPrice(row){
+        this.$confirm('此操作将永久删除该订单, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$http.post(`prices/pricesDel/${row._id}`)
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+          this.getPrice()
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        })
       },
-      closeStatus(row){
-        this._id = row._id
-        this.failOpen = true
-      },
-      openAdd(){
-        this.isShow=true;
-        this.operateForm={};
-      },
-      changeSuccess(){
-        this.$http.post('prices/changeStatus', {_id: this._id})
-            .then(async res=>{
-              this.successOpen = false
-              this.getPrice();
-              console.log(res)
-            }).catch(err=>console.log(err))
-      },
-      changeFail(){
-        this.$http.post('prices/changeStatusFail', {_id: this._id, cancelReason: this.cancelReason})
-            .then(res=>{
-              this.failOpen = false
-              this.$message({
-                type: 'success',
-                message: '成功!'
-              });
-              this.getPrice()
-            }).catch(err=>console.log(err))
-      },
-      determine(){
-              this.$http.post('prices/pricesAdd', this.operateForm).then(res => {
-                    this.isShow=false;
-                    this.getPrice();
-                  })
-      },
-
       searchPrice(){
        this.getPrice();
       },
