@@ -118,7 +118,7 @@ export default {
               icon:'s-custom',
               name:'试驾管理',
               path:'customer',
-              children:[{path:'customerManage',icon: 's-check', name:'试驾预约'},
+              children:[{path:'appointmentDive',icon: 's-check', name:'试驾预约'},
                         {path:'customerManage',icon: 's-check', name:'我的预约'}]
             },
             // {

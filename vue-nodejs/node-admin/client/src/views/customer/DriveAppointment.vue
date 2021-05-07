@@ -7,7 +7,7 @@
         </el-form-item>
       </el-form>
       <div class="button">
-        <el-button type="primary" @click="searchCustomer" class="search">搜索</el-button>
+        <el-button type="primary" @click="searchCustomer" class="search" style="margin-top: 20px">搜索</el-button>
       </div>
     </div>
     <el-table

@@ -65,7 +65,8 @@ module.exports= app =>{
                                             if(err) throw err;
                                             res.json({
                                                 success:true,
-                                                token:'Bearer '+token
+                                                token:'Bearer '+token,
+                                                userName: user.name
                                             })
                                         })
                                     }else{

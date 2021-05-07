@@ -2,44 +2,41 @@
 module.exports= app =>{
     const express = require('express')
     const router = express.Router()
-    const Customer = require('../../models/Appointment')
+    const Appointment = require('../../models/Appointment')
     const passport = require('passport')
 
 
 
     //获取全部客户信息
     router.get('/',passport.authenticate('jwt',{session:false}),(req,res)=>{
-        let name = req.query.name
-        if (!name) {
-            Customer.find().then(customer=>{
-                if(!customer){
+        let appointmentName = req.query.appointmentName
+        if (!appointmentName) {
+            Appointment.find().then(Appointment=>{
+                if(!Appointment){
                     return res.status(404).json('没有任何信息')
                 }
-                res.json(customer)
+                res.json(Appointment)
             }).catch(err=>res.status(404).json(err))
         }else {
-            Customer.find({name:name}).then(customer=>{
-                if(!customer){
+            Appointment.find({appointmentName:appointmentName}).then(Appointment=>{
+                if(!Appointment){
                     return res.status(404).json('没有任何信息')
                 }
-                res.json(customer)
+                res.json(Appointment)
             }).catch(err=>res.status(404).json(err))
         }
     })
 
     //添加客户信息
-    router.post('/customerAdd',passport.authenticate('jwt',{session:false}),(req,res)=>{
-        const customerFields = {}
-        if(req.body.name) customerFields.name = req.body.name
-        if(req.body.sex) customerFields.sex = req.body.sex
-        if(req.body.age) customerFields.age = req.body.age
-        if(req.body.telephone) customerFields.telephone = req.body.telephone
-        if(req.body.address) customerFields.address = req.body.address
-        if(req.body.model) customerFields.model = req.body.model
-        if(req.body.saleDate) customerFields.saleDate = req.body.saleDate
-        if(req.body.totalAmount) customerFields.totalAmount = req.body.totalAmount
-        new Customer(customerFields).save().then(customer=>{
-            res.json(customer)
+    router.post('/appointmentAdd',passport.authenticate('jwt',{session:false}),(req,res)=>{
+        const AppointmentFields = {}
+        if(req.body.appointmentName) AppointmentFields.appointmentName = req.body.appointmentName
+        if(req.body.appointmentModel) AppointmentFields.appointmentModel = req.body.appointmentModel
+        if(req.body.telephone) AppointmentFields.telephone = req.body.telephone
+        if(req.body.appointmentDate) AppointmentFields.appointmentDate = req.body.appointmentDate
+        AppointmentFields.appointmentStatus = 1
+        new Appointment(AppointmentFields).save().then(Appointment=>{
+            res.json(Appointment)
         })
     })
 
