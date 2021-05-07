@@ -2,7 +2,7 @@
 module.exports= app =>{
     const express = require('express')
     const router = express.Router()
-    const User = require('../../models/Users')
+    const User = require('../../models/User')
     const bcrypt = require('bcrypt')
     const gravatar = require('gravatar')
     const jwt = require('jsonwebtoken')

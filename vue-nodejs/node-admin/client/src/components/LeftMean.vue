@@ -118,7 +118,8 @@ export default {
               icon:'s-custom',
               name:'试驾管理',
               path:'customer',
-              children:[{path:'customerManage',icon: 's-check', name:'试驾预约'}]
+              children:[{path:'customerManage',icon: 's-check', name:'试驾预约'},
+                        {path:'customerManage',icon: 's-check', name:'我的预约'}]
             },
             // {
             //   icon:'s-shop',
@@ -149,7 +150,8 @@ export default {
               name:'投诉管理',
               path:'complaint',
               children:[
-                {path:'complaintService', icon: 'warning', name:'提交投诉'}
+                {path:'complaintService', icon: 'warning', name:'提交投诉'},
+                {path:'complaintService', icon: 'warning', name:'我的投诉'}
               ]
             },
           ]

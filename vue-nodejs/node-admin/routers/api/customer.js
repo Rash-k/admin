@@ -2,7 +2,7 @@
 module.exports= app =>{
     const express = require('express')
     const router = express.Router()
-    const Customer = require('../../models/Customers')
+    const Customer = require('../../models/Customer')
     const passport = require('passport')
 
 

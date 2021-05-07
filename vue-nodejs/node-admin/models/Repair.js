@@ -15,6 +15,9 @@ const scheme = new mongoose.Schema({
     },
     repairDate: {
         type: Date
+    },
+    mileage: {
+        type: String
     }
 })
 

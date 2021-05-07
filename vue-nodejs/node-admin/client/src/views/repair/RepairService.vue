@@ -41,6 +41,10 @@
           label="维修内容">
       </el-table-column>
       <el-table-column
+          prop="mileage"
+          label="行驶里程">
+      </el-table-column>
+      <el-table-column
           prop="cost"
           label="费用">
       </el-table-column>
@@ -92,6 +96,9 @@
         </el-form-item>
         <el-form-item label="金额" :label-width="formLabelWidth">
           <el-input v-model="operateForm.cost" autocomplete="off" placeholder="请输入金额"></el-input>
+        </el-form-item>
+        <el-form-item label="行驶里程" :label-width="formLabelWidth">
+          <el-input v-model="operateForm.mileage" autocomplete="off" placeholder="请输入行驶里程"></el-input>
         </el-form-item>
         <el-form-item label="维修时间" :label-width="formLabelWidth">
           <el-date-picker

@@ -2,7 +2,7 @@
 module.exports= app =>{
     const express = require('express')
     const router = express.Router()
-    const Repair = require('../../models/Repairs')
+    const Repair = require('../../models/Repair')
     const passport = require('passport')
 
 
@@ -35,6 +35,7 @@ module.exports= app =>{
         if(req.body.model) RepairFields.model = req.body.model
         if(req.body.content) RepairFields.content = req.body.content
         if(req.body.cost) RepairFields.cost = req.body.cost
+        if(req.body.mileage) RepairFields.mileage = req.body.mileage
         if(req.body.repairDate) RepairFields.repairDate = req.body.repairDate
         new Repair(RepairFields).save().then(Repair=>{
             res.json(Repair)
@@ -46,6 +47,7 @@ module.exports= app =>{
         if (req.body.model) RepairFields.model = req.body.model
         if (req.body.content) RepairFields.content = req.body.content
         if (req.body.cost) RepairFields.cost = req.body.cost
+        if(req.body.mileage) RepairFields.mileage = req.body.mileage
         if (req.body.repairDate) RepairFields.repairDate = req.body.repairDate
         Repair.findByIdAndUpdate(
             {_id:req.body._id},

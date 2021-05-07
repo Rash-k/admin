@@ -1,7 +1,7 @@
 module.exports = app => {
     const express = require('express')
     const router = express.Router()
-    const Maintain = require('../../models/Maintains')
+    const Maintain = require('../../models/Maintain')
     const passport = require('passport')
 
 
