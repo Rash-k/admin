@@ -50,15 +50,24 @@ module.exports= app =>{
     })
 
     router.post('/complaintsHandle',passport.authenticate('jwt',{session:false}),(req,res)=>{
-        let _id = req.body._id
-        let treatmentResult = req.body.treatmentResult
+
+        let _id = req.body.changeObj._id
+        let complaintStatus = req.body.changeObj.complaintStatus
         Complaint.findOneAndUpdate(
             {_id:_id},
-            {complaintStatus: 1, treatmentResult: treatmentResult},
+            {complaintStatus: complaintStatus},
             {new:true}
-        ).then(Price=>res.json(Price))
+        ).then(Complaint=>res.json(Complaint))
     })
 
+    router.post('/complaintsEnd',passport.authenticate('jwt',{session:false}),(req,res)=>{
+        let _id = req.body._id
+        Complaint.findOneAndUpdate(
+            {_id:_id},
+            {complaintStatus: 2},
+            {new:true}
+        ).then(Complaint=>res.json(Complaint))
+    })
 
     router.post('/complaintsDel/:id',passport.authenticate('jwt',{session:false}),(req,res)=>{
         let id = req.params.id

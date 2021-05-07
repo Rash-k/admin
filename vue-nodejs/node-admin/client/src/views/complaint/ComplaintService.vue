@@ -60,15 +60,9 @@
               size="mini"
               type="text"
               icon="el-icon-edit"
-              :disabled="scope.row.complaintStatus === '1' ? true : false"
+              :disabled="scope.row.complaintStatus === 2 ? true : false"
               @click="closeStatus(scope.row)"
-          >处理</el-button>
-          <el-button
-              size="mini"
-              type="text"
-              icon="el-icon-edit"
-              @click="delHandel(scope.row)"
-          >删除</el-button>
+          >投诉状态更新</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -92,8 +86,11 @@
         :visible.sync="failOpen"
         width="30%">
       <el-form>
-        <el-form-item label="处理结果" :label-width="formLabelWidth">
-          <el-input v-model="treatmentResult" autocomplete="off" placeholder="请输入投诉处理结果"></el-input>
+        <el-form-item label="投诉状态" :label-width="formLabelWidth">
+          <el-select v-model="operateForm.complaintStatus" placeholder="请选择">
+            <el-option key="1" value=1 label="处理中" v-if="state === 0"></el-option>
+            <el-option key="2" value=2 label="完成" v-if="state === 1"></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -110,22 +107,10 @@ export default {
     data(){
         return {
           formatDate,
-          _id:'',
-          treatmentResult: '',
-          isShow:false,
           failOpen: false,
+          id: '',
+          state: 0,
           operateForm: {},
-          addForm: {
-            name: undefined,
-            sex: undefined,
-            age: undefined,
-            telephone: undefined,
-            address: undefined,
-            model: undefined,
-            saleDate: undefined,
-            totalAmount: undefined,
-            isVip: undefined
-          },
           formLabelWidth: '100px',
           queryParams: {
             complaintStatus: undefined
@@ -158,11 +143,14 @@ export default {
             .catch(err=>console.log(err))
         },
       closeStatus(row){
-        this._id = row._id
+        this.operateForm = {}
+        this.id = row._id
+        this.state = row.complaintStatus
         this.failOpen = true
       },
       changeFail(){
-        this.$http.post('complaints/complaintsHandle', {_id: this._id, treatmentResult: this.treatmentResult})
+        this.operateForm._id = this.id
+        this.$http.post('complaints/complaintsHandle', {changeObj: this.operateForm})
             .then(res=>{
               this.failOpen = false
               this.$message({
@@ -171,25 +159,6 @@ export default {
               });
               this.getPrice()
             }).catch(err=>console.log(err))
-      },
-      delHandel(row){
-        this.$confirm('此操作将永久删除该投诉, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$http.post(`complaints/complaintsDel/${row._id}`)
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
-          this.getPrice()
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
-        })
       },
       searchPrice(){
        this.getPrice();
