@@ -1,15 +1,5 @@
 <template>
   <div class="table">
-    <div class="manager-header" v-if="user.identity === 'manager'">
-      <el-form inline class="myForm">
-        <el-form-item label="姓名">
-          <el-input v-model="queryParams.appointmentName" placeholder="请输入"></el-input>
-        </el-form-item>
-      </el-form>
-      <div class="button">
-        <el-button type="primary" @click="searchCustomer" class="search" style="margin-top: 20px">搜索</el-button>
-      </div>
-    </div>
     <el-table
         v-loading="loading"
         :data="customerData"
@@ -44,6 +34,14 @@
           prop="telephone"
           label="联系电话">
       </el-table-column>
+      <el-table-column label="操作" >
+        <template slot-scope="scope">
+          <el-button
+              size="mini"
+              @click="cancel(scope.row)"
+          >取消预约</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <el-row>
       <el-col :span='24'>
@@ -72,7 +70,7 @@ export default {
           operateForm: {},
           formLabelWidth: '100px',
           queryParams: {
-            sex: undefined
+            appointmentName: ''
           },
           loading: false,
             paginations:{
@@ -90,8 +88,7 @@ export default {
     methods:{
       getCustomers(){
         this.loading = true
-        let queryParams = Object.assign(this.queryParams)
-        this.$http.get('appointment', {params:queryParams}).then(res=>{
+        this.$http.get('appointment', {params:this.queryParams}).then(res=>{
           this.allCustomerData = res.data
                 this.fileterCustomerData = res.data
                 //设置分页数据
@@ -100,9 +97,15 @@ export default {
             })
             .catch(err=>console.log(err))
         },
-      searchCustomer(){
-        this.getCustomers()
-      },
+        cancel(row) {
+          this.$http.post('appointment/cancel', {_id: row._id}).then(res=>{
+            this.allCustomerData = res.data
+            this.fileterCustomerData = res.data
+            //设置分页数据
+            this.getCustomers()
+            this.setPaginations()
+          }).catch(err=>console.log(err))
+        },
         setPaginations(){
             this.paginations.total = this.allCustomerData.length
             this.paginations.page_index = 1
@@ -136,11 +139,11 @@ export default {
     computed:{
         user(){
           return this.$store.getters.user
-        }
+        },
     },
     created(){
-        this.getCustomers()
-        console.log(this.$store.getters.user)
+      this.queryParams.appointmentName = this.$store.getters.user.name
+      this.getCustomers()
     },
 }
 </script>

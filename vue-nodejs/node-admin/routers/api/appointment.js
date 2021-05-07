@@ -34,12 +34,20 @@ module.exports= app =>{
         if(req.body.appointmentModel) AppointmentFields.appointmentModel = req.body.appointmentModel
         if(req.body.telephone) AppointmentFields.telephone = req.body.telephone
         if(req.body.appointmentDate) AppointmentFields.appointmentDate = req.body.appointmentDate
-        AppointmentFields.appointmentStatus = 1
+        AppointmentFields.appointmentStatus = 0
         new Appointment(AppointmentFields).save().then(Appointment=>{
             res.json(Appointment)
         })
     })
 
+    router.post('/cancel',passport.authenticate('jwt',{session:false}),(req,res)=>{
+        let _id = req.body._id
+        Appointment.findOneAndUpdate(
+            {_id:_id},
+            {appointmentStatus: 1},
+            {new:true}
+        ).then(Price=>res.json(Price))
+    })
 
 
     app.use('/api/appointment',router)

@@ -61,8 +61,8 @@ export default {
         });
       },
       determine(){
-        this.operateForm.appointmentName = this.$store.getters.userName
-          this.$http.post('appointment/appointmentAdd', this.operateForm).then(
+        this.operateForm.appointmentName = this.$store.getters.user.name
+        this.$http.post('appointment/appointmentAdd', this.operateForm).then(
               res => {
                 console.log(this.operateForm)
                 this.operateForm = {}
@@ -77,12 +77,7 @@ export default {
     computed:{
         user(){
           return this.$store.getters.user
-        },
-        userName() {
-          return this.$store.getters.userName
         }
-    },
-    created(){
     },
 }
 </script>

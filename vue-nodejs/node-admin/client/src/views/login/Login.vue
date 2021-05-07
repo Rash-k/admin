@@ -53,14 +53,12 @@ export default {
                         .then(res=>{
                             //登录成功，拿到token
                             const { token } = res.data;
-                            const userName = res.data.userName
                             localStorage.setItem('eleToken',token)
                             //解析token
                             const decode = jwt_decode(token)
                             //token存储到VueX中
                             this.$store.dispatch("setAuthenticated",!this.isEmpty(decode))
                             this.$store.dispatch("setUser",decode)
-                            this.$store.dispatch("setUserName",userName)
                             this.$router.push('/index')
                         })
                 }

@@ -119,16 +119,8 @@ export default {
               name:'试驾管理',
               path:'customer',
               children:[{path:'appointmentDive',icon: 's-check', name:'试驾预约'},
-                        {path:'customerManage',icon: 's-check', name:'我的预约'}]
+                        {path:'myAppointment',icon: 's-check', name:'我的预约'}]
             },
-            // {
-            //   icon:'s-shop',
-            //   name:'订单管理',
-            //   path:'price',
-            //   children:[
-            //     {path:'customerPrice', icon: 's-goods', name:'客户订单'}
-            //   ]
-            // },
             {
               icon:'upload',
               name:'保养管理',
@@ -163,7 +155,6 @@ export default {
     }
   },
   created() {
-    console.log(this.$store.getters.user)
   }
 }
 </script>
