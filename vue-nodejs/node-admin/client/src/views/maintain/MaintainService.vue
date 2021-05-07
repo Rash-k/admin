@@ -45,6 +45,17 @@
           label="费用">
       </el-table-column>
       <el-table-column
+          prop="maintenanceType"
+          label="保养类型">
+        <template slot-scope="scope">
+          {{ scope.row.maintenanceType === 1 ? '基础保养' : '深化保养' }}
+        </template>
+      </el-table-column>
+      <el-table-column
+          prop="mileage"
+          label="行驶里程">
+      </el-table-column>
+      <el-table-column
           prop="maintenanceDate"
           label="保养日期">
         <template slot-scope="scope">
@@ -93,7 +104,16 @@
         <el-form-item label="金额" :label-width="formLabelWidth">
           <el-input v-model="operateForm.cost" autocomplete="off" placeholder="请输入金额"></el-input>
         </el-form-item>
-        <el-form-item label="保养时间" :label-width="formLabelWidth">
+        <el-form-item label="行驶里程" :label-width="formLabelWidth">
+          <el-input v-model="operateForm.mileage" autocomplete="off" placeholder="行驶里程"></el-input>
+        </el-form-item>
+        <el-form-item label="保养类型" :label-width="formLabelWidth">
+          <el-select v-model="operateForm.maintenanceType" placeholder="请选择">
+            <el-option key="1" value="1" label="基础保养"></el-option>
+            <el-option key="0" value="0" label="深化保养"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="保养日期" :label-width="formLabelWidth">
           <el-date-picker
               v-model="operateForm.maintenanceDate"
               type="date"

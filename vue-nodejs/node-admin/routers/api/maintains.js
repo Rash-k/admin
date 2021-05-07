@@ -8,6 +8,8 @@ module.exports = app => {
     router.get('/',passport.authenticate('jwt',{session: false}),(req,res) => {
         let startTime = req.query.startTime
         let endTime = req.query.endTime
+        console.log(startTime)
+        console.log(endTime)
         if (startTime && endTime) {
             Maintain.find({maintenanceDate: {$gte: startTime, $lt: endTime}}).then(maintain=> {
                 if (!maintain) {
@@ -32,6 +34,8 @@ module.exports = app => {
         if (req.body.content) maintainFields.content = req.body.content
         if (req.body.cost) maintainFields.cost = req.body.cost
         if (req.body.maintenanceDate) maintainFields.maintenanceDate = req.body.maintenanceDate
+        if (req.body.mileage) maintainFields.mileage = req.body.mileage
+        if (req.body.maintenanceType) maintainFields.maintenanceType = req.body.maintenanceType
         new Maintain(maintainFields).save().then(maintain=>{
             res.json(maintain)
         })
@@ -44,6 +48,8 @@ module.exports = app => {
         if (req.body.content) maintainFields.content = req.body.content
         if (req.body.cost) maintainFields.cost = req.body.cost
         if (req.body.maintenanceDate) maintainFields.maintenanceDate = req.body.maintenanceDate
+        if (req.body.mileage) maintainFields.mileage = req.body.mileage
+        if (req.body.maintenanceType) maintainFields.maintenanceType = req.body.maintenanceType
         Maintain.findByIdAndUpdate(
             {_id:req.body._id},
             {$set:maintainFields},
