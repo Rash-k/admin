@@ -143,7 +143,7 @@ export default {
               path:'complaint',
               children:[
                 {path:'submitComplaint', icon: 'warning', name:'提交投诉'},
-                {path:'complaintService', icon: 'warning', name:'我的投诉'}
+                {path:'myComplaint', icon: 'warning', name:'我的投诉'}
               ]
             },
           ]

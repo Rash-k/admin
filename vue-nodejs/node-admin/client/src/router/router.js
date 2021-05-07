@@ -18,6 +18,7 @@ import DealPrice from "../views/price/DealPrice";
 import AppointmentDive from "../views/customer/AppointmentDive";
 import MyAppointment from "../views/customer/MyAppointment";
 import SubmitComplaint from "../views/complaint/SubmitComplaint";
+import MyComplaint from "../views/complaint/MyComplaint";
 Vue.use(Router)
 
 const router = new Router({
@@ -46,8 +47,9 @@ const router = new Router({
         {path:'/repairService',name:'维修管理',component:RepairService},
         {path:'/complaintService',name:'投诉管理',component:ComplaintService},
         {path:'/appointmentDive',name:'预约试驾',component:AppointmentDive},
-        {path:'/myAppointment',name:'预约试驾',component:MyAppointment},
-        {path:'/submitComplaint',name:'提交投诉',component:SubmitComplaint}
+        {path:'/myAppointment',name:'我的试驾',component:MyAppointment},
+        {path:'/submitComplaint',name:'提交投诉',component:SubmitComplaint},
+        {path:'/myComplaint',name:'我的投诉',component:MyComplaint}
 
       ]
     },

@@ -8,20 +8,30 @@ module.exports= app =>{
 
     router.get('/',passport.authenticate('jwt',{session:false}),(req,res)=>{
         let complaintStatus = req.query.complaintStatus
-        if (!complaintStatus) {
-            Complaint.find().then(Complaint=>{
-                if(!Complaint){
-                    return res.status(404).json('没有任何信息')
-                }
-                res.json(Complaint)
-            }).catch(err=>res.status(404).json(err))
+        let name = req.query.name
+        if (name) {
+                Complaint.find({name: name}).then(Complaint=>{
+                    if(!Complaint){
+                        return res.status(404).json('没有任何信息')
+                    }
+                    res.json(Complaint)
+                }).catch(err=>res.status(404).json(err))
         }else {
-            Complaint.find({complaintStatus:complaintStatus}).then(Complaint=>{
-                if(!Complaint){
-                    return res.status(404).json('没有任何信息')
-                }
-                res.json(Complaint)
-            }).catch(err=>res.status(404).json(err))
+            if (!complaintStatus) {
+                Complaint.find().then(Complaint=>{
+                    if(!Complaint){
+                        return res.status(404).json('没有任何信息')
+                    }
+                    res.json(Complaint)
+                }).catch(err=>res.status(404).json(err))
+            }else {
+                Complaint.find({complaintStatus:complaintStatus}).then(Complaint=>{
+                    if(!Complaint){
+                        return res.status(404).json('没有任何信息')
+                    }
+                    res.json(Complaint)
+                }).catch(err=>res.status(404).json(err))
+            }
         }
     })
 
