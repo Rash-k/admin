@@ -21,7 +21,7 @@
         style="width: 100%">
       <el-table-column
           prop="_id"
-          label="编号">
+          label="单号">
       </el-table-column>
       <el-table-column
           prop="name"
@@ -33,7 +33,7 @@
       </el-table-column>
       <el-table-column
           prop="complaintReason"
-          label="投诉原因">
+          label="诉求问题">
       </el-table-column>
       <el-table-column
           prop="complaintDate"
@@ -50,12 +50,8 @@
           prop="complaintStatus"
           label="状态">
         <template slot-scope="scope">
-          {{ scope.row.complaintStatus === '0' ? '处理中' : '已解决' }}
+          {{ scope.row.complaintStatus === 0 ? '未处理': scope.row.complaintStatus === 1 ? '处理中' : '完成' }}
         </template>
-      </el-table-column>
-      <el-table-column
-          prop="treatmentResult"
-          label="处理结果">
       </el-table-column>
       <el-table-column
           label="操作"

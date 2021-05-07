@@ -16,11 +16,8 @@ const scheme = new mongoose.Schema({
     telephone:{
         type:String,
     },
-    treatmentResult:{
-        type:String,
-    },
     complaintStatus:{
-        type:String
+        type:Number
     }
 })
 
