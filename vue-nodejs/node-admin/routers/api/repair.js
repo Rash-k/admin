@@ -11,20 +11,39 @@ module.exports= app =>{
     router.get('/',passport.authenticate('jwt',{session:false}),(req,res)=>{
         let startTime = req.query.startTime
         let endTime = req.query.endTime
-        if (startTime && endTime) {
-            Repair.find({repairDate: {$gte: startTime, $lt: endTime}}).then(Repair=> {
-                if (!Repair) {
-                    return res.status(404).json('没有任何信息')
-                }
-                res.json(Repair)
-            })
+        let name = req.query.name
+        if (name) {
+            if (startTime && endTime) {
+                Repair.find({repairDate: {$gte: startTime, $lt: endTime},name: name}).then(Repair=> {
+                    if (!Repair) {
+                        return res.status(404).json('没有任何信息')
+                    }
+                    res.json(Repair)
+                })
+            }else {
+                Repair.find({name: name}).then(Repair=> {
+                    if (!Repair) {
+                        return res.status(404).json('没有任何信息')
+                    }
+                    res.json(Repair)
+                })
+            }
         }else {
-            Repair.find().then(Repair=> {
-                if (!Repair) {
-                    return res.status(404).json('没有任何信息')
-                }
-                res.json(Repair)
-            })
+            if (startTime && endTime) {
+                Repair.find({repairDate: {$gte: startTime, $lt: endTime}}).then(Repair=> {
+                    if (!Repair) {
+                        return res.status(404).json('没有任何信息')
+                    }
+                    res.json(Repair)
+                })
+            }else {
+                Repair.find().then(Repair=> {
+                    if (!Repair) {
+                        return res.status(404).json('没有任何信息')
+                    }
+                    res.json(Repair)
+                })
+            }
         }
     })
 

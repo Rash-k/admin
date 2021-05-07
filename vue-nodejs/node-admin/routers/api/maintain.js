@@ -8,22 +8,39 @@ module.exports = app => {
     router.get('/',passport.authenticate('jwt',{session: false}),(req,res) => {
         let startTime = req.query.startTime
         let endTime = req.query.endTime
-        console.log(startTime)
-        console.log(endTime)
-        if (startTime && endTime) {
-            Maintain.find({maintenanceDate: {$gte: startTime, $lt: endTime}}).then(maintain=> {
-                if (!maintain) {
-                    return res.status(404).json('没有任何信息')
-                }
-                res.json(maintain)
-            })
-        }else {
-            Maintain.find().then(maintain=> {
-                if (!maintain) {
-                    return res.status(404).json('没有任何信息')
-                }
-                res.json(maintain)
-            })
+        let name = req.query.name
+        if (name) {
+            if (startTime && endTime) {
+                Maintain.find({maintenanceDate: {$gte: startTime, $lt: endTime},name: name}).then(maintain=> {
+                    if (!maintain) {
+                        return res.status(404).json('没有任何信息')
+                    }
+                    res.json(maintain)
+                })
+            }else {
+                Maintain.find({name: name}).then(maintain=> {
+                    if (!maintain) {
+                        return res.status(404).json('没有任何信息')
+                    }
+                    res.json(maintain)
+                })
+            }
+        } else {
+            if (startTime && endTime) {
+                Maintain.find({maintenanceDate: {$gte: startTime, $lt: endTime}}).then(maintain=> {
+                    if (!maintain) {
+                        return res.status(404).json('没有任何信息')
+                    }
+                    res.json(maintain)
+                })
+            }else {
+                Maintain.find().then(maintain=> {
+                    if (!maintain) {
+                        return res.status(404).json('没有任何信息')
+                    }
+                    res.json(maintain)
+                })
+            }
         }
     })
 

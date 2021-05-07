@@ -16,8 +16,8 @@
           </el-form-item>
       </el-form>
       <div class="button">
-        <el-button type="primary" @click="searchCustomer" class="search">搜索</el-button>
-        <el-button type="primary" class="add" @click="openAdd()">新增</el-button>
+        <el-button type="primary" @click="searchCustomer" class="search" style="margin-top: 20px">搜索</el-button>
+        <el-button type="primary" class="add" @click="openAdd()" v-if="user.identity === 'manager'">新增</el-button>
       </div>
     </div>
     <el-table
@@ -142,7 +142,8 @@ export default {
       time: [],
       queryParams: {
         startTime: undefined,
-        endTime: undefined
+        endTime: undefined,
+        name: ''
       },
       loading: false,
       paginations:{
@@ -163,6 +164,11 @@ export default {
       let queryParams = Object.assign({}, this.queryParams)
       queryParams.startTime = this.time[0]
       queryParams.endTime = this.time[1]
+      if (this.$store.getters.user.identity === 'manager') {
+        queryParams.name = ''
+      }else {
+        queryParams.name = this.$store.getters.user.name
+      }
       this.$http.get('maintains', {params:queryParams}).then(res=>{
         this.allMaintainData = res.data
         this.filterMaintainData = res.data

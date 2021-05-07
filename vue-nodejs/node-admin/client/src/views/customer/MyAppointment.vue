@@ -39,6 +39,7 @@
           <el-button
               size="mini"
               @click="cancel(scope.row)"
+              :disabled="scope.row.appointmentStatus !== 0 ? true : false"
           >取消预约</el-button>
         </template>
       </el-table-column>
