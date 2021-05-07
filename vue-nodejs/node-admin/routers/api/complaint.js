@@ -26,14 +26,14 @@ module.exports= app =>{
     })
 
 
-    router.post('/complaintsAdd',passport.authenticate('jwt',{session:false}),(req,res)=>{
+    router.post('/complaintAdd',passport.authenticate('jwt',{session:false}),(req,res)=>{
         const ComplaintFields = {}
         if(req.body.name) ComplaintFields.name = req.body.name
         if(req.body.complaintModel) ComplaintFields.complaintModel = req.body.complaintModel
         if(req.body.complaintReason) ComplaintFields.complaintReason = req.body.complaintReason
         if(req.body.complaintDate) ComplaintFields.complaintDate = req.body.complaintDate
         if(req.body.telephone) ComplaintFields.telephone = req.body.telephone
-        ComplaintFields.complaintStatus = '0'
+        ComplaintFields.complaintStatus = 0
         new Complaint(ComplaintFields).save().then(Complaint=>{
             res.json(Complaint)
         })
@@ -44,7 +44,7 @@ module.exports= app =>{
         let treatmentResult = req.body.treatmentResult
         Complaint.findOneAndUpdate(
             {_id:_id},
-            {complaintStatus: '1', treatmentResult: treatmentResult},
+            {complaintStatus: 1, treatmentResult: treatmentResult},
             {new:true}
         ).then(Price=>res.json(Price))
     })

@@ -10,8 +10,7 @@
         </el-form-item>
       </el-form>
       <div class="button">
-        <el-button type="primary" @click="searchPrice" class="search">搜索</el-button>
-        <el-button type="primary" class="add" @click="openAdd()">新增</el-button>
+        <el-button type="primary" @click="searchPrice" class="search" style="margin-top: 20px">搜索</el-button>
       </div>
     </div>
     <el-table
@@ -50,7 +49,7 @@
           prop="complaintStatus"
           label="状态">
         <template slot-scope="scope">
-          {{ scope.row.complaintStatus === 0 ? '未处理': scope.row.complaintStatus === 1 ? '处理中' : '完成' }}
+          {{ scope.row.complaintStatus === 0 ? '已提交': scope.row.complaintStatus === 1 ? '处理中' : '完成' }}
         </template>
       </el-table-column>
       <el-table-column
@@ -88,33 +87,6 @@
         </div>
       </el-col>
     </el-row>
-    <el-dialog title="新增投诉" :visible.sync="isShow" width="30%">
-      <el-form :model="operateForm">
-        <el-form-item label="姓名" prop="name" :label-width="formLabelWidth">
-          <el-input v-model="operateForm.name" autocomplete="off" placeholder="请输入姓名"></el-input>
-        </el-form-item>
-        <el-form-item label="投诉车型" prop="model" :label-width="formLabelWidth">
-          <el-input v-model="operateForm.complaintModel" autocomplete="off" placeholder="投诉车型"></el-input>
-        </el-form-item>
-        <el-form-item label="投诉原因" prop="amount" :label-width="formLabelWidth">
-          <el-input v-model="operateForm.complaintReason" autocomplete="off" placeholder="投诉原因"></el-input>
-        </el-form-item>
-        <el-form-item label="投诉日期" :label-width="formLabelWidth">
-          <el-date-picker
-              v-model="operateForm.complaintDate"
-              type="date"
-              placeholder="选择日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="联系电话" prop="telephone" :label-width="formLabelWidth">
-          <el-input v-model="operateForm.telephone" autocomplete="off" placeholder="请输入联系方式"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="isShow = false">取 消</el-button>
-        <el-button type="primary" @click="determine()">确 定</el-button>
-      </div>
-    </el-dialog>
     <el-dialog
         title="提示"
         :visible.sync="failOpen"
@@ -189,10 +161,6 @@ export default {
         this._id = row._id
         this.failOpen = true
       },
-      openAdd(){
-        this.isShow=true;
-        this.operateForm={};
-      },
       changeFail(){
         this.$http.post('complaints/complaintsHandle', {_id: this._id, treatmentResult: this.treatmentResult})
             .then(res=>{
@@ -203,12 +171,6 @@ export default {
               });
               this.getPrice()
             }).catch(err=>console.log(err))
-      },
-      determine(){
-              this.$http.post('complaints/complaintsAdd', this.operateForm).then(res => {
-                    this.isShow=false;
-                    this.getPrice();
-                  })
       },
       delHandel(row){
         this.$confirm('此操作将永久删除该投诉, 是否继续?', '提示', {
