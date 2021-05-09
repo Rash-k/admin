@@ -76,7 +76,7 @@
           <el-button
               size="mini"
               type="text"
-              icon="el-icon-edit"
+              icon="el-icon-delete"
               v-if="scope.row.state === '2'"
               :disabled="scope.row.state === '1' ? true : false"
               @click="closeStatus(scope.row)"

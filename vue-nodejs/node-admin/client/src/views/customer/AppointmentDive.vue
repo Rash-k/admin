@@ -32,14 +32,8 @@ export default {
     data(){
         return {
           formatDate,
-          operateType: 'add',
-          isShow:false,
-          dialogVisible:false,
           operateForm: {},
           formLabelWidth: '100px',
-          queryParams: {
-            sex: undefined
-          },
           loading: false,
             paginations:{
                 page_index:1, //当前位于多少页
@@ -48,9 +42,9 @@ export default {
                 page_sizes:[10,15,20], //每页显示多少条
                 layout:'total,sizes,prev,pager,next,jumper' // 翻页属性
             },
-            customerData:[],
-            allCustomerData:[],
-            fileterCustomerData:[],
+            appointmentData:[],
+            allAppointmentData:[],
+            filterAppointmentData:[],
         }
     },
     methods:{
@@ -64,14 +58,13 @@ export default {
         this.operateForm.appointmentName = this.$store.getters.user.name
         this.$http.post('appointment/appointmentAdd', this.operateForm).then(
               res => {
-                console.log(this.operateForm)
                 this.operateForm = {}
                 this.open()
               }
           )
       },
-      searchCustomer(){
-        this.getCustomers()
+      searchAppointment(){
+        this.getAppointment()
       },
     },
     computed:{

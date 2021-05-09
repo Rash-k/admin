@@ -16,7 +16,7 @@ function startLoading(){
 function endLoading(){
     setTimeout(() => {
         loading.close()
-    }, 1000)
+    }, 700)
 }
 
 const http = axios.create({

@@ -67,7 +67,7 @@
           <el-button
               size="mini"
               type="text"
-              icon="el-icon-edit"
+              icon="el-icon-delete"
               @click="delDeal(scope.row)"
           >删除</el-button>
         </template>
