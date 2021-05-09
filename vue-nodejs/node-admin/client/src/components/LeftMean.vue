@@ -61,7 +61,7 @@ export default {
                     path:'customer',
                     children:[{path:'customerManage',icon: 's-check', name:'购车客户登记'},
                       // {path:'customerManage',icon: 's-check', name:'意向客户登记'},
-                      {path:'driveAppointment',icon: 's-check', name:'试驾客户预约'}]
+                      {path:'driveAppointment',icon: 'user', name:'试驾客户预约'}]
                 },
               {
                     icon:'s-shop',
@@ -69,8 +69,8 @@ export default {
                     path:'price',
                     children:[
                       {path:'customerPrice', icon: 's-goods', name:'预定管理'},
-                      {path:'dealPrice', icon: 's-goods', name:'成交管理'},
-                      {path:'cancelReservation', icon: 's-goods', name:'预定取消管理'},
+                      {path:'dealPrice', icon: 'goods', name:'成交管理'},
+                      {path:'cancelReservation', icon: 'tickets', name:'预定取消管理'},
                     ]
               },
                 // {
@@ -90,7 +90,7 @@ export default {
                     ]
                 },
               {
-                  icon:'upload',
+                  icon:'film',
                   name:'维修管理',
                   path:'repair',
                   children:[
@@ -98,7 +98,7 @@ export default {
                   ]
               },
               {
-                  icon:'upload',
+                  icon:'message-solid',
                   name:'投诉管理',
                   path:'complaint',
                   children:[
@@ -119,10 +119,10 @@ export default {
               name:'试驾管理',
               path:'customer',
               children:[{path:'appointmentDive',icon: 's-check', name:'试驾预约'},
-                        {path:'myAppointment',icon: 's-check', name:'我的预约'}]
+                        {path:'myAppointment',icon: 'user', name:'我的预约'}]
             },
             {
-              icon:'upload',
+              icon:'s-help',
               name:'保养管理',
               path:'maintain',
               children:[
@@ -138,12 +138,12 @@ export default {
               ]
             },
             {
-              icon:'upload',
+              icon:'question',
               name:'投诉管理',
               path:'complaint',
               children:[
                 {path:'submitComplaint', icon: 'warning', name:'提交投诉'},
-                {path:'myComplaint', icon: 'warning', name:'我的投诉'}
+                {path:'myComplaint', icon: 's-comment', name:'我的投诉'}
               ]
             },
           ]
