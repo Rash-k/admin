@@ -7,8 +7,8 @@
         </el-form-item>
       </el-form>
       <div class="button">
-        <el-button type="primary" @click="searchPrice" class="search">搜索</el-button>
-        <el-button type="primary" class="add" @click="openAdd()">新增</el-button>
+        <el-button type="primary" @click="searchPrice" class="search" plain>搜索</el-button>
+        <el-button type="primary" class="add" @click="openAdd()" plain>新增</el-button>
       </div>
     </div>
     <el-table
@@ -141,7 +141,7 @@
         width="30%">
      <el-form>
        <el-form-item>
-         <el-input placeholder="确定将预定状态更改为成功吗？" disabled>
+         <el-input placeholder="确定将预定状态更改为成交吗？" disabled>
          </el-input>
        </el-form-item>
      </el-form>
@@ -168,7 +168,7 @@
 </template>
 
 <script>
-import {export2Excel, formatDate} from '../../utils'
+import {formatDate} from '../../utils'
 export default {
     data(){
         return {
@@ -237,7 +237,6 @@ export default {
             .then(async res=>{
               this.successOpen = false
               this.getPrice();
-              console.log(res)
             }).catch(err=>console.log(err))
       },
       changeFail(){

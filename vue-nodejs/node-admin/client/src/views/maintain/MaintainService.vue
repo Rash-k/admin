@@ -16,8 +16,8 @@
           </el-form-item>
       </el-form>
       <div class="button">
-        <el-button type="primary" @click="searchCustomer" class="search" style="margin-top: 20px">搜索</el-button>
-        <el-button type="primary" class="add" @click="openAdd()" v-if="user.identity === 'manager'">新增</el-button>
+        <el-button type="info" @click="searchCustomer" class="search" style="margin-top: 20px">搜索</el-button>
+        <el-button type="info" class="add" @click="openAdd()" v-if="user.identity === 'manager'">新增</el-button>
       </div>
     </div>
     <el-table

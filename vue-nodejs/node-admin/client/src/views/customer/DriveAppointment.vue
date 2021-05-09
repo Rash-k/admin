@@ -7,12 +7,12 @@
         </el-form-item>
       </el-form>
       <div class="button">
-        <el-button type="primary" @click="searchCustomer" class="search" style="margin-top: 20px">搜索</el-button>
+        <el-button @click="searchAppointment" class="search" style="margin-top: 20px">搜索</el-button>
       </div>
     </div>
     <el-table
         v-loading="loading"
-        :data="customerData"
+        :data="appointmentData"
         style="width: 100%">
       <el-table-column
           prop="_id"
@@ -82,40 +82,40 @@ export default {
                 page_sizes:[10,15,20], //每页显示多少条
                 layout:'total,sizes,prev,pager,next,jumper' // 翻页属性
             },
-            customerData:[],
-            allCustomerData:[],
-            fileterCustomerData:[],
+            appointmentData:[],
+            allAppointmentData:[],
+            fileterAppointmentData:[],
         }
     },
     methods:{
-      getCustomers(){
+      getAppointment(){
         this.loading = true
         let queryParams = Object.assign(this.queryParams)
         this.$http.get('appointment', {params:queryParams}).then(res=>{
-          this.allCustomerData = res.data
-                this.fileterCustomerData = res.data
+          this.allAppointmentData = res.data
+                this.fileterAppointmentData = res.data
                 //设置分页数据
                 this.setPaginations()
                 this.loading = false
             })
             .catch(err=>console.log(err))
         },
-      searchCustomer(){
-        this.getCustomers()
+      searchAppointment(){
+        this.getAppointment()
       },
         setPaginations(){
-            this.paginations.total = this.allCustomerData.length
+            this.paginations.total = this.allAppointmentData.length
             this.paginations.page_index = 1
             this.paginations.page_size = 10
             //设置默认分页数据
-            this.customerData = this.allCustomerData.filter((item,index)=>{
+            this.appointmentData = this.allAppointmentData.filter((item,index)=>{
                 return index < this.paginations.page_size
             })
         },
         handleSizeChange(page_size){
             this.paginations.page_index = 1
             this.paginations.page_size = page_size
-            this.customerData = this.allCustomerData.filter((item,index)=>{
+            this.appointmentData = this.allAppointmentData.filter((item,index)=>{
                 return index < page_size
             })
         },
@@ -126,10 +126,10 @@ export default {
             let nums = this.paginations.page_size * page
             let tables = []
             for(let i=index; i<nums; i++){
-                if(this.allCustomerData[i]){
-                    tables.push(this.allCustomerData[i])
+                if(this.allAppointmentData[i]){
+                    tables.push(this.allAppointmentData[i])
                 }
-                this.customerData = tables
+                this.appointmentData = tables
             }
         },
     },
@@ -139,8 +139,7 @@ export default {
         }
     },
     created(){
-        this.getCustomers()
-        console.log(this.$store.getters.user)
+        this.getAppointment()
     },
 }
 </script>

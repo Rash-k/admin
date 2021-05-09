@@ -7,13 +7,13 @@
         </el-form-item>
       </el-form>
       <div class="button">
-        <el-button type="primary" @click="searchPrice" class="search" style="margin-top: 20px">搜索</el-button>
+        <el-button type="primary" @click="searchDeal" class="search" style="margin-top: 20px" plain>搜索</el-button>
       </div>
     </div>
     <el-table
         v-loading="loading"
         border
-        :data="priceData"
+        :data="dealData"
         style="width: 100%">
       <el-table-column
           prop="_id"
@@ -68,7 +68,7 @@
               size="mini"
               type="text"
               icon="el-icon-edit"
-              @click="delPrice(scope.row)"
+              @click="delDeal(scope.row)"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -97,21 +97,7 @@ export default {
     data(){
         return {
           formatDate,
-          _id:'',
-          priceFailReason: '',
-          isShow:false,
-          successOpen:false,
-          failOpen: false,
           operateForm: {},
-          addForm: {
-            name: undefined,
-            sex: undefined,
-            age: undefined,
-            telephone: undefined,
-            address: undefined,
-            model: undefined,
-            saleDate: undefined
-          },
           formLabelWidth: '100px',
           queryParams: {
             state: '1',
@@ -125,27 +111,27 @@ export default {
                 page_sizes:[10,15,20], //每页显示多少条
                 layout:'total,sizes,prev,pager,next,jumper' // 翻页属性
             },
-            priceData:[],
-            allPriceData:[],
-            fileterPriceData:[],
+            dealData:[],
+            allDealData:[],
+            fileterDealData:[],
         }
     },
     methods:{
-      getPrice(){
+      getDeal(){
         this.loading = true
         let queryParams = Object.assign(this.queryParams)
             this.$http.get('prices', {params: queryParams})
             .then(res=>{
-                this.allPriceData = res.data
-                this.fileterPriceData = res.data
+                this.allDealData = res.data
+                this.fileterDealData = res.data
                 //设置分页数据
               this.setPaginations()
                 this.loading = false
             })
             .catch(err=>console.log(err))
         },
-      delPrice(row){
-        this.$confirm('此操作将永久删除该订单, 是否继续?', '提示', {
+      delDeal(row){
+        this.$confirm('此操作将永久删除该预定信息, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -155,7 +141,7 @@ export default {
             type: 'success',
             message: '删除成功!'
           });
-          this.getPrice()
+          this.getDeal()
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -163,22 +149,22 @@ export default {
           });
         })
       },
-      searchPrice(){
-       this.getPrice();
+      searchDeal(){
+       this.getDeal();
       },
         setPaginations(){
-            this.paginations.total = this.allPriceData.length
+            this.paginations.total = this.allDealData.length
             this.paginations.page_index = 1
             this.paginations.page_size = 10
             //设置默认分页数据
-            this.priceData = this.allPriceData.filter((item,index)=>{
+            this.dealData = this.allDealData.filter((item,index)=>{
                 return index < this.paginations.page_size
             })
         },
         handleSizeChange(page_size){
             this.paginations.page_index = 1
             this.paginations.page_size = page_size
-            this.priceData = this.allPriceData.filter((item,index)=>{
+            this.dealData = this.allDealData.filter((item,index)=>{
                 return index < page_size
             })
         },
@@ -189,10 +175,10 @@ export default {
             let nums = this.paginations.page_size * page
             let tables = []
             for(let i=index; i<nums; i++){
-                if(this.allPriceData[i]){
-                    tables.push(this.allPriceData[i])
+                if(this.allDealData[i]){
+                    tables.push(this.allDealData[i])
                 }
-                this.priceData = tables
+                this.dealData = tables
             }
         },
     },
@@ -202,7 +188,7 @@ export default {
         }
     },
     created(){
-        this.getPrice()
+        this.getDeal()
     },
 }
 </script>

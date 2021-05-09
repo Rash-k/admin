@@ -7,9 +7,9 @@
         </el-form-item>
       </el-form>
       <div class="button">
-        <el-button type="primary" @click="searchCustomer" class="search">搜索</el-button>
-        <el-button type="primary" class="add" @click="openAdd()">新增</el-button>
-        <el-button type="primary" @click="download" class="export">导出Excel</el-button>
+        <el-button @click="searchCustomer" class="search">搜索</el-button>
+        <el-button class="add" @click="openAdd()">新增</el-button>
+        <el-button @click="download" class="export">导出</el-button>
       </div>
     </div>
     <el-table
@@ -179,7 +179,6 @@ export default {
         if (this.operateType === 'add') {
           this.$http.post('customers/customerAdd', this.operateForm).then(
               res => {
-                // console.log(res.data);
                 this.isShow=false;
                 this.getCustomers();
               }
@@ -188,7 +187,6 @@ export default {
           // /${this.operateForm._id}
           this.$http.post('customers/customerEdit', this.operateForm).then(
               res => {
-                // console.log(res.data);
                 this.isShow=false;
                 this.getCustomers();
               }
@@ -261,7 +259,6 @@ export default {
     },
     created(){
         this.getCustomers()
-        console.log(this.$store.getters.user)
     },
 }
 </script>
