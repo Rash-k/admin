@@ -47,34 +47,31 @@ module.exports= app =>{
     router.post('/login',(req,res)=>{
         const email = req.body.email
         const password = req.body.password
-        User.findOne({email})
-                        .then(user => {
-                            if(!user){
-                                return res.status(400).json('用户不存在!')
-                            }
-                            bcrypt.compare(password, user.password)
-                                .then(isMatch=>{
-                                    if(isMatch){
-                                        const rule = {
-                                            id:user.id,
-                                            name:user.name,
-                                            avatar:user.avatar,
-                                            identity:user.identity
-                                        }
-                                        jwt.sign(rule,'secret',{ expiresIn:3600 },(err,token)=>{
-                                            if(err) throw err;
-                                            res.json({
-                                                success:true,
-                                                token:'Bearer '+token,
-                                                userName: user.name
-                                            })
-                                        })
-                                    }else{
-                                        return res.status(400).json('密码错误')
-                                    }
-                                })
+        User.findOne({email}).then(user => {
+            if(!user){
+                return res.status(400).json('用户不存在!')
+            }
+            bcrypt.compare(password, user.password).then(isMatch=>{
+                if(isMatch){
+                    const rule = {
+                        id:user.id,
+                        name:user.name,
+                        avatar:user.avatar,
+                        identity:user.identity
+                    }
+                    jwt.sign(rule,'secret',{ expiresIn:3600 },(err,token)=>{
+                        if(err) throw err;
+                        res.json({
+                            success:true,
+                            token:'Bearer '+token,
+                            userName: user.name
                         })
-                        .catch()
+                    })
+                }else{
+                    return res.status(400).json('密码错误')
+                }
+            })
+        }).catch()
     })
 
 
