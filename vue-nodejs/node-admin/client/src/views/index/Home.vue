@@ -1,5 +1,6 @@
 <template>
-  <el-row class="home" :gutter="20">
+  <div>
+  <el-row class="home" :gutter="20" v-if="user.identity === 'manager'">
     <el-col :span="8">
       <el-card shadow="hover" style="margin-top: 5px">
         <div class="user">
@@ -49,6 +50,8 @@
       </div>
     </el-col>
   </el-row>
+  <div v-if="user.identity === 'emplyee'" class="text">欢迎使用奔驰4S店管理平台</div>
+  </div>
 </template>
 
 <script>
@@ -195,4 +198,9 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@/assets/scss/Manage.scss";
+  .text {
+      font-size: 20pt;
+      font-weight: bold;
+      margin-top: 20px;
+  }
 </style>
