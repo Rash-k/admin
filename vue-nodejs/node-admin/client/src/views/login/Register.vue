@@ -3,7 +3,7 @@
         <section class="form_container">
             <div class="manage_tip">
                 <span class="title">奔驰4S店管理系统</span>
-                <el-form :model="registerUser" :rules="rules" ref="registerForm" label-width="80px" class="registerForm">
+                <el-form :model="registerUser" :rules="rules" ref="registerForm" label-width="90px" class="registerForm">
                     <el-form-item label="用户名" prop="name">
                         <el-input v-model="registerUser.name" placeholder="请输入用户名"></el-input>
                     </el-form-item>
@@ -16,7 +16,7 @@
                     <el-form-item label="确认密码" prop="password2">
                         <el-input type='password' v-model="registerUser.password2" placeholder="请再次输入密码"></el-input>
                     </el-form-item>
-                    <el-form-item label="选择身份">
+                    <el-form-item label="选择身份" >
                         <el-select v-model="registerUser.identity" placeholder="请选择身份">
                             <el-option label="管理员" value='manager'></el-option>
                             <el-option label="员工" value='emplyee'></el-option>
@@ -24,6 +24,7 @@
                     </el-form-item>
                     <el-form-item>
                         <el-button type='primary' class="submit_btn" @click="submitForm('registerForm')">注册</el-button>
+                        <el-button type='primary' class="submit_btn" @click="back">返回</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -85,6 +86,9 @@ export default {
                 }
             })
         },
+      back() {
+          this.$router.push('/login')
+      }
     }
 }
 </script>
@@ -98,7 +102,7 @@ export default {
   background-size: 100% 100%;
 }
 .form_container {
-  width: 370px;
+  width: 400px;
   height: 210px;
   position: absolute;
   top: 10%;
@@ -122,7 +126,7 @@ export default {
 }
 
 .submit_btn {
-  width: 100%;
+  width: 100px;
 }
 </style>
 

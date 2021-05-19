@@ -23,7 +23,6 @@
                             <span class="el-dropdown-link"><i class="el-icon-caret-bottom el-icon--right"></i>
                             </span>
                             <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item command="info">个人信息</el-dropdown-item>
                                 <el-dropdown-item command="logout">退出</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
