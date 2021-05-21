@@ -62,7 +62,7 @@
           {{ formatDate(scope.row.maintenanceDate) }}
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作" v-if="user.identity === 'manager'">
         <template slot-scope="scope">
           <el-button
               size="mini"
